@@ -132,7 +132,6 @@
             object-fit: cover;
         }
 
-        /* Fallback se non c'è immagine */
         .img-placeholder .no-img {
             font-size: 3rem;
             color: #7b5a3b;
@@ -160,14 +159,32 @@
             gap: 10px;
             margin-top: 12px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
-        input {
-            width: 80px;
+        .peso-input {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .peso-input label {
+            font-size: 0.7rem;
+            color: #6c5b4b;
+            display: block;
+        }
+
+        .peso-input input {
+            width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 12px;
             font-size: 0.9rem;
+        }
+
+        .esempi-peso {
+            font-size: 0.65rem;
+            color: #6c5b4b;
+            margin-top: 4px;
         }
 
         button.aggiungi {
@@ -179,6 +196,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: background 0.2s;
+            white-space: nowrap;
         }
 
         button.aggiungi:hover {
@@ -201,6 +219,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .carrello-item-info {
+            flex: 1;
+        }
+
+        .carrello-item-peso {
+            font-size: 0.8rem;
+            color: #6c5b4b;
         }
 
         .totale {
@@ -236,6 +265,97 @@
             background: #1d7a4c;
         }
 
+        /* Sezione contatti e mappa */
+        .contatti-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin: 48px 0;
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #ede0ce;
+        }
+
+        .contatti-info {
+            padding: 32px;
+            background: #fff7ef;
+        }
+
+        .contatti-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            color: #2c5e3a;
+        }
+
+        .contatto-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 12px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .contatto-icon {
+            font-size: 2rem;
+        }
+
+        .contatto-details {
+            flex: 1;
+        }
+
+        .contatto-details strong {
+            display: block;
+            font-size: 0.8rem;
+            color: #6c5b4b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contatto-details a, .contatto-details span {
+            font-size: 1.1rem;
+            color: #2c2418;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contatto-details a:hover {
+            color: #2c5e3a;
+        }
+
+        .orari {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e2cfb3;
+        }
+
+        .orari h4 {
+            margin-bottom: 12px;
+            color: #2c5e3a;
+        }
+
+        .orari p {
+            margin: 6px 0;
+            font-size: 0.9rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+            border: 0;
+        }
+
         footer {
             text-align: center;
             padding: 48px 0;
@@ -254,10 +374,24 @@
             font-size: 0.85rem;
         }
 
+        .alert-message {
+            background: #fff3cd;
+            border: 1px solid #ffecb5;
+            color: #856404;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
         @media (max-width: 700px) {
             .hero h1 { font-size: 2.2rem; }
             .prodotti-grid { grid-template-columns: 1fr; }
-            .btn-ordina { display: block; width: 100%; margin-bottom: 12px; }
+            .btn-ordina { display: block; width: 100%; margin-bottom: 12px; margin-right: 0; }
+            .ordine-row { flex-direction: column; }
+            button.aggiungi { width: 100%; }
+            .contatti-section { grid-template-columns: 1fr; }
+            .map-container { min-height: 300px; }
         }
     </style>
 </head>
@@ -274,35 +408,83 @@
 </div>
 
 <div class="container">
+    <div id="alertMessage" class="alert-message"></div>
+    
     <div class="carrello-sidebar" id="carrelloDiv">
-        <h3>📦 Riepilogo ordine (pesi a piacere, anche frazioni di kg)</h3>
+        <h3>📦 Riepilogo ordine</h3>
+        <p style="font-size: 0.8rem; margin-bottom: 12px;">⚖️ Pesi disponibili: da 0.050 kg (50g) a 5 kg. Esempi: 0.050 = 50g, 0.150 = 150g, 0.550 = 550g, 1.2 = 1.2kg</p>
         <div id="listaCarrello"></div>
-        <div class="totale">Totale: € <span id="totaleCarrello">0.00</span></div>
+        <div class="totale">💰 Totale: € <span id="totaleCarrello">0.00</span></div>
         <button class="btn-ordina" id="btnEmail">✉️ Invia ordine via email</button>
         <button class="btn-ordina btn-telegram" id="btnTelegram">📱 Ordina su Telegram</button>
         <button class="svuota-carrello" id="svuotaCarrello">🗑️ Svuota carrello</button>
-        <p style="font-size: 0.75rem; margin-top: 12px;">* Email: si apre il tuo client di posta. Telegram: apri chat con il nostro bot.</p>
-        <p style="font-size: 0.7rem; color: #b45f2b;">🎂 Ordini anche per compleanni e feste - disponibili monodose e formato famiglia!</p>
+        <p style="font-size: 0.7rem; color: #b45f2b; margin-top: 12px;">🎂 Ordini anche per compleanni e feste - disponibili monodose e formato famiglia!</p>
     </div>
 
     <div id="catalogo"></div>
 
+    <!-- SEZIONE CONTATTI E MAPPA -->
+    <div class="contatti-section">
+        <div class="contatti-info">
+            <h3>📞 Contattaci</h3>
+            <div class="contatto-item">
+                <div class="contatto-icon">📧</div>
+                <div class="contatto-details">
+                    <strong>Email</strong>
+                    <a href="mailto:ops.channel@proton.me">ops.channel@proton.me</a>
+                </div>
+            </div>
+            <div class="contatto-item">
+                <div class="contatto-icon">📱</div>
+                <div class="contatto-details">
+                    <strong>Telefono / WhatsApp</strong>
+                    <a href="tel:+393316219512">+39 331 621 9512</a>
+                </div>
+            </div>
+            <div class="contatto-item">
+                <div class="contatto-icon">📍</div>
+                <div class="contatto-details">
+                    <strong>Indirizzo</strong>
+                    <span>Trattoria Camporeggi - Casa della Nella, Livorno</span>
+                </div>
+            </div>
+            <div class="orari">
+                <h4>🕐 Orari di apertura</h4>
+                <p>📅 Martedì - Domenica: 12:00 - 15:00 | 19:00 - 22:00</p>
+                <p>📅 Lunedì: Chiuso</p>
+                <p>📞 Per ordini e ritiri: chiamare prima per disponibilità</p>
+                <p>🚚 Spedizioni su ordinazione | Ritiro in loco</p>
+            </div>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4091.4124450406225!2d10.404901365665333!3d43.52182714633443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d5e94bb7cd312f%3A0xcd6bdb80b0bfde9!2sTrattoria%20Camporeggi%20-%20Casa%20della%20Nella!5e0!3m2!1sit!2sit!4v1778710984580!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+
     <footer>
         <strong>Camporeggi Valle Benedetta - Livorno</strong><br>
         Prodotti sottovuoto e freschi | Spedizioni e ritiro su ordinazione<br>
-        📧 Email: <a href="mailto:ordini@camporeggi.it" style="color:#2c5e3a;">ordini@camporeggi.it</a> | 
+        📧 Email: <a href="mailto:ops.channel@proton.me" style="color:#2c5e3a;">ops.channel@proton.me</a> | 
+        📱 Telefono: <a href="tel:+393316219512" style="color:#2c5e3a;">+39 331 621 9512</a> |
         📱 Telegram: <a href="#" style="color:#2c5e3a;" id="telegramLink">@CamporeggiOrdiniBot</a><br>
-        📍 Via della Valle Benedetta, Livorno - Italia
+        📍 Trattoria Camporeggi - Casa della Nella, Livorno - Italia
     </footer>
 </div>
 
 <script>
     // ============================================================
-    // DATABASE PRODOTTI CON PERCORSI IMMAGINI
+    // CONFIGURAZIONE
     // ============================================================
-    // 🔧 DA MODIFICARE: metti il nome del TUO bot Telegram qui sotto
-    const TELEGRAM_BOT_USERNAME = "IL_TUO_BOT_USERNAME";  // <--- CAMBIA CON IL TUO @username (senza @)
+    // 🔧 METTI QUI IL NOME DEL TUO BOT TELEGRAM (senza @)
+    const TELEGRAM_BOT_USERNAME = "IL_TUO_BOT_USERNAME";
     
+    // Email e telefono per gli ordini
+    const EMAIL_ORDINI = "ops.channel@proton.me";
+    const TELEFONO_AZIENDA = "+393316219512";
+    
+    // ============================================================
+    // DATABASE PRODOTTI
+    // ============================================================
     const catalogoProdotti = [
         // PASTA FRESCA
         { nome: "Tagliolini freschi", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", imgUrl: "img/pasta/tagliolini.jpg" },
@@ -318,9 +500,9 @@
         { nome: "Arista", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", imgUrl: "img/carni/arista.jpg" },
         { nome: "Roast beef", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", imgUrl: "img/carni/roastbeef.jpg" },
         
-        // FORNO (peso fisso)
-        { nome: "Pinse 200g (pomodoro/patate/cipolla/zucchine)", prezzoKg: 10, categoria: "🔥 Forno", imgUrl: "img/forno/pinse.jpg", fissoPeso: 0.2, prezzoFisso: 2 },
-        { nome: "Pinse 400g (pomodoro/patate/cipolla/zucchine)", prezzoKg: 7.5, categoria: "🔥 Forno", imgUrl: "img/forno/pinse.jpg", fissoPeso: 0.4, prezzoFisso: 3 },
+        // FORNO (peso fisso - non modificabile)
+        { nome: "Pinse 200g", prezzoKg: 10, categoria: "🔥 Forno", imgUrl: "img/forno/pinse.jpg", fissoPeso: 0.2, prezzoFisso: 2 },
+        { nome: "Pinse 400g", prezzoKg: 7.5, categoria: "🔥 Forno", imgUrl: "img/forno/pinse.jpg", fissoPeso: 0.4, prezzoFisso: 3 },
         { nome: "Schiacciata al carbone 200g", prezzoKg: 10, categoria: "🔥 Forno", imgUrl: "img/forno/schiacciata.jpg", fissoPeso: 0.2, prezzoFisso: 2 },
         { nome: "Schiacciata al carbone 400g", prezzoKg: 7.5, categoria: "🔥 Forno", imgUrl: "img/forno/schiacciata.jpg", fissoPeso: 0.4, prezzoFisso: 3 },
         
@@ -331,18 +513,51 @@
         { nome: "Melanzane alla parmigiana", prezzoKg: 7, categoria: "🥣 Zuppe e primi", imgUrl: "img/primi/melanzane.jpg" },
         
         // DOLCI
-        { nome: "Crostata albicocca", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/crostata.jpg" },
-        { nome: "Crostata frutti di bosco", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/crostata.jpg" },
-        { nome: "Crostata fragole", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/crostata.jpg" },
-        { nome: "Cheesecake cotta/cruda", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/cheesecake.jpg" },
-        { nome: "Torta del nonno", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/torranonno.jpg" },
-        { nome: "Torta della nonna", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/torranonna.jpg" }
+        { nome: "Crostata albicocca", prezzoKg: 15, categoria: "🍰 Dolci", imgUrl: "img/dolci/crostata.jpg" },
+        { nome: "Crostata frutti di bosco", prezzoKg: 15, categoria: "🍰 Dolci", imgUrl: "img/dolci/crostata.jpg" },
+        { nome: "Crostata fragole", prezzoKg: 15, categoria: "🍰 Dolci", imgUrl: "img/dolci/crostata.jpg" },
+        { nome: "Cheesecake cotta/cruda", prezzoKg: 15, categoria: "🍰 Dolci", imgUrl: "img/dolci/cheesecake.jpg" },
+        { nome: "Torta del nonno", prezzoKg: 15, categoria: "🍰 Dolci", imgUrl: "img/dolci/torranonno.jpg" },
+        { nome: "Torta della nonna", prezzoKg: 15, categoria: "🍰 Dolci", imgUrl: "img/dolci/torranonna.jpg" }
     ];
 
     let carrello = [];
 
     // ============================================================
-    // FUNZIONE PER MOSTRARE IL CATALOGO
+    // FUNZIONE PER MOSTRARE MESSAGGI
+    // ============================================================
+    function showMessage(msg, isError = true) {
+        const alertDiv = document.getElementById("alertMessage");
+        alertDiv.textContent = msg;
+        alertDiv.style.display = "block";
+        alertDiv.style.background = isError ? "#fff3cd" : "#d4edda";
+        alertDiv.style.color = isError ? "#856404" : "#155724";
+        alertDiv.style.border = isError ? "1px solid #ffecb5" : "1px solid #c3e6cb";
+        setTimeout(() => {
+            alertDiv.style.display = "none";
+        }, 3000);
+    }
+
+    // ============================================================
+    // FUNZIONE PER VALIDARE IL PESO
+    // ============================================================
+    function validaPeso(peso) {
+        if (isNaN(peso) || peso === "") return false;
+        let pesoNum = parseFloat(peso);
+        if (isNaN(pesoNum)) return false;
+        if (pesoNum < 0.05) {
+            showMessage("⚠️ Peso minimo 0.050 kg (50 grammi)");
+            return false;
+        }
+        if (pesoNum > 5) {
+            showMessage("⚠️ Peso massimo 5 kg per prodotto");
+            return false;
+        }
+        return true;
+    }
+
+    // ============================================================
+    // MOSTRA IL CATALOGO
     // ============================================================
     function renderCatalogo() {
         const container = document.getElementById("catalogo");
@@ -353,93 +568,148 @@
             html += `<h2 class="categoria">${cat}</h2><div class="prodotti-grid">`;
             const prodottiCat = catalogoProdotti.filter(p => p.categoria === cat);
             for(let prod of prodottiCat) {
-                const prezzoMostra = prod.prezzoFisso ? `${prod.prezzoFisso}€ (peso ${prod.fissoPeso*1000}g)` : `${prod.prezzoKg}€/kg`;
-                html += `
-                    <div class="card-prodotto">
-                        <div class="img-placeholder">
-                            <img src="${prod.imgUrl}" alt="${prod.nome}" onerror="this.src=''; this.parentElement.innerHTML='<div class=\'no-img\'>📷<br>Foto non disponibile</div>'">
-                        </div>
-                        <div class="info-prodotto">
-                            <div class="nome-prodotto">${prod.nome}</div>
-                            <div class="prezzo">💰 ${prezzoMostra}</div>
-                `;
-                
-                if(!prod.fissoPeso) {
+                if(prod.prezzoFisso) {
                     html += `
-                        <div class="ordine-row">
-                            <input type="number" step="0.1" min="0.1" value="0.5" id="kg-${prod.nome.replace(/\s/g,'')}" placeholder="kg">
-                            <button class="aggiungi" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}">Aggiungi</button>
+                        <div class="card-prodotto">
+                            <div class="img-placeholder">
+                                <img src="${prod.imgUrl}" alt="${prod.nome}" onerror="this.src=''; this.parentElement.innerHTML='<div class=\\'no-img\\'>📷<br>Foto non disponibile</div>'">
+                            </div>
+                            <div class="info-prodotto">
+                                <div class="nome-prodotto">${prod.nome}</div>
+                                <div class="prezzo">💰 ${prod.prezzoFisso}€ (${prod.fissoPeso*1000}g)</div>
+                                <div class="ordine-row">
+                                    <button class="aggiungi-fisso" data-nome="${prod.nome}" data-prezzo="${prod.prezzoFisso}" data-peso="${prod.fissoPeso}">➕ Aggiungi al carrello</button>
+                                </div>
+                            </div>
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="ordine-row">
-                            <button class="aggiungi" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}" data-fisso="${prod.fissoPeso}" data-prezzoFisso="${prod.prezzoFisso}">Aggiungi pezzo (${prod.fissoPeso*1000}g)</button>
+                        <div class="card-prodotto">
+                            <div class="img-placeholder">
+                                <img src="${prod.imgUrl}" alt="${prod.nome}" onerror="this.src=''; this.parentElement.innerHTML='<div class=\\'no-img\\'>📷<br>Foto non disponibile</div>'">
+                            </div>
+                            <div class="info-prodotto">
+                                <div class="nome-prodotto">${prod.nome}</div>
+                                <div class="prezzo">💰 ${prod.prezzoKg}€/kg</div>
+                                <div class="ordine-row">
+                                    <div class="peso-input">
+                                        <label>⚖️ Peso (kg):</label>
+                                        <input type="number" step="0.01" min="0.05" value="0.5" id="kg-${prod.nome.replace(/\s/g,'').replace(/[()]/g,'')}" placeholder="es. 0.5">
+                                        <div class="esempi-peso">Esempi: 0.05 (50g) | 0.25 (250g) | 0.55 (550g) | 1.2 (1.2kg)</div>
+                                    </div>
+                                    <button class="aggiungi-variabile" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}">➕ Aggiungi</button>
+                                </div>
+                            </div>
                         </div>
                     `;
                 }
-                html += `</div></div>`;
             }
             html += `</div>`;
         }
         container.innerHTML = html;
 
-        // Attach event listeners
-        document.querySelectorAll(".aggiungi").forEach(btn => {
-            btn.addEventListener("click", (e) => {
+        // Eventi per prodotti a peso fisso
+        document.querySelectorAll(".aggiungi-fisso").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const nome = btn.dataset.nome;
+                const prezzoTot = parseFloat(btn.dataset.prezzo);
+                const pesoTot = parseFloat(btn.dataset.peso);
+                
+                carrello.push({
+                    id: Date.now() + Math.random(),
+                    nome: nome,
+                    pesoKg: pesoTot,
+                    prezzoUnitarioKg: prezzoTot / pesoTot,
+                    prezzoTotale: prezzoTot
+                });
+                aggiornaCarrello();
+                showMessage(`✅ ${nome} aggiunto al carrello!`, false);
+            });
+        });
+
+        // Eventi per prodotti a peso variabile
+        document.querySelectorAll(".aggiungi-variabile").forEach(btn => {
+            btn.addEventListener("click", () => {
                 const nome = btn.dataset.nome;
                 const prezzoKg = parseFloat(btn.dataset.prezzoKg);
-                const fisso = btn.dataset.fisso;
-                const prezzoFisso = btn.dataset.prezzoFisso ? parseFloat(btn.dataset.prezzoFisso) : null;
-                let pesoKg = 0;
-                let prezzoTot = 0;
+                const inputId = `kg-${nome.replace(/\s/g,'').replace(/[()]/g,'')}`;
+                const inputElem = document.getElementById(inputId);
                 
-                if(fisso && prezzoFisso) {
-                    pesoKg = parseFloat(fisso);
-                    prezzoTot = prezzoFisso;
-                } else {
-                    const inputId = `kg-${nome.replace(/\s/g,'')}`;
-                    const inputElem = document.getElementById(inputId);
-                    if(inputElem) pesoKg = parseFloat(inputElem.value);
-                    else pesoKg = 0.5;
-                    if(isNaN(pesoKg) || pesoKg <= 0) pesoKg = 0.1;
-                    prezzoTot = pesoKg * prezzoKg;
-                }
-                carrello.push({ nome, pesoKg, prezzoUnitarioKg: prezzoKg, prezzoTotale: prezzoTot });
+                let pesoKg = 0;
+                if(inputElem) pesoKg = parseFloat(inputElem.value);
+                else pesoKg = 0.5;
+                
+                if(!validaPeso(pesoKg)) return;
+                
+                const prezzoTot = pesoKg * prezzoKg;
+                
+                carrello.push({
+                    id: Date.now() + Math.random(),
+                    nome: nome,
+                    pesoKg: pesoKg,
+                    prezzoUnitarioKg: prezzoKg,
+                    prezzoTotale: prezzoTot
+                });
                 aggiornaCarrello();
+                showMessage(`✅ ${nome} (${(pesoKg*1000).toFixed(0)}g) aggiunto!`, false);
             });
         });
     }
 
     // ============================================================
-    // FUNZIONE CARRELLO
+    // AGGIORNA CARRELLO E TOTALE
     // ============================================================
     function aggiornaCarrello() {
         const listaDiv = document.getElementById("listaCarrello");
         let totale = 0;
         let htmlItems = "";
         
-        carrello.forEach((item, idx) => {
-            totale += item.prezzoTotale;
-            htmlItems += `<div class="carrello-item">
-                <span><strong>${item.nome}</strong> - ${item.pesoKg.toFixed(2)} kg → € ${item.prezzoTotale.toFixed(2)}</span>
-                <button style="background:none; border:none; color:#b00020; cursor:pointer; font-size:1.2rem;" onclick="rimuoviItem(${idx})">🗑️</button>
-            </div>`;
-        });
+        if(carrello.length === 0) {
+            htmlItems = "<p style='text-align:center; color:#6c5b4b;'>🛒 Carrello vuoto. Aggiungi prodotti!</p>";
+        } else {
+            carrello.forEach((item, idx) => {
+                totale += item.prezzoTotale;
+                let pesoMostra = "";
+                if(item.pesoKg < 1) {
+                    pesoMostra = `${(item.pesoKg * 1000).toFixed(0)} grammi`;
+                } else {
+                    pesoMostra = `${item.pesoKg.toFixed(2)} kg`;
+                }
+                
+                htmlItems += `
+                    <div class="carrello-item">
+                        <div class="carrello-item-info">
+                            <strong>${item.nome}</strong><br>
+                            <span class="carrello-item-peso">⚖️ ${pesoMostra} → € ${item.prezzoTotale.toFixed(2)}</span>
+                        </div>
+                        <button style="background:#f0e0d0; border:none; padding:6px 12px; border-radius:20px; color:#b00020; cursor:pointer;" onclick="rimuoviItem(${idx})">🗑️ Rimuovi</button>
+                    </div>
+                `;
+            });
+        }
         
-        if(carrello.length === 0) htmlItems = "<p>Nessun prodotto aggiunto. Scegli peso o pezzi e clicca Aggiungi.</p>";
         listaDiv.innerHTML = htmlItems;
         document.getElementById("totaleCarrello").innerText = totale.toFixed(2);
+        
+        // Salva carrello nel localStorage
+        localStorage.setItem("camporeggiCarrello", JSON.stringify(carrello));
     }
 
     window.rimuoviItem = function(idx) {
+        const rimoso = carrello[idx];
         carrello.splice(idx, 1);
         aggiornaCarrello();
+        showMessage(`❌ ${rimoso.nome} rimosso dal carrello`);
     }
 
+    // Svuota carrello
     document.getElementById("svuotaCarrello")?.addEventListener("click", () => {
-        carrello = [];
-        aggiornaCarrello();
+        if(carrello.length > 0) {
+            carrello = [];
+            aggiornaCarrello();
+            showMessage("🗑️ Carrello svuotato!");
+        }
     });
 
     // ============================================================
@@ -447,51 +717,74 @@
     // ============================================================
     function generaTestoOrdine() {
         let testo = "🛒 ORDINE CAMPOREGGI VALLE BENEDETTA\n";
-        testo += `📅 Data: ${new Date().toLocaleString()}\n`;
-        testo += "=" .repeat(40) + "\n\n";
+        testo += `📅 Data: ${new Date().toLocaleString('it-IT')}\n`;
+        testo += "═".repeat(50) + "\n\n";
         let totale = 0;
         
-        carrello.forEach(item => {
-            testo += `• ${item.nome}: ${item.pesoKg.toFixed(2)} kg → € ${item.prezzoTotale.toFixed(2)}\n`;
+        carrello.forEach((item, idx) => {
+            let pesoMostra = "";
+            if(item.pesoKg < 1) {
+                pesoMostra = `${(item.pesoKg * 1000).toFixed(0)} grammi`;
+            } else {
+                pesoMostra = `${item.pesoKg.toFixed(2)} kg`;
+            }
+            testo += `${idx+1}. ${item.nome}\n`;
+            testo += `   📦 Peso: ${pesoMostra}\n`;
+            testo += `   💶 Prezzo: € ${item.prezzoTotale.toFixed(2)}\n\n`;
             totale += item.prezzoTotale;
         });
         
-        testo += "\n" + "=".repeat(40) + "\n";
+        testo += "═".repeat(50) + "\n";
         testo += `💰 TOTALE COMPLESSIVO: € ${totale.toFixed(2)}\n\n`;
-        testo += "📦 Consegna a:\n";
-        testo += "   Nome: _______________\n";
+        testo += "─".repeat(50) + "\n";
+        testo += "📦 DATI CONSEGNA:\n";
+        testo += "   Nome e cognome: _______________\n";
         testo += "   Indirizzo: _______________\n";
+        testo += "   Città: _______________\n";
         testo += "   Telefono: _______________\n\n";
-        testo += "🎂 Note (compleanni, monodose, personalizzazioni):\n   _________________\n\n";
-        testo += "Grazie per l'ordine! 🍝🌿";
+        testo += "🎂 NOTE (compleanni, monodose, personalizzazioni):\n";
+        testo += "   _____________________________________________\n\n";
+        testo += "🙏 Grazie per l'ordine! Riceverai conferma al più presto.\n";
+        testo += "Camporeggi Valle Benedetta - Livorno\n";
+        testo += `📞 Telefono: ${TELEFONO_AZIENDA}\n`;
+        testo += `📧 Email: ${EMAIL_ORDINI}`;
         
         return testo;
     }
 
     // ============================================================
-    // EMAIL
+    // EMAIL (USANDO LA TUA EMAIL)
     // ============================================================
     document.getElementById("btnEmail").addEventListener("click", () => {
-        if(carrello.length === 0) { alert("⚠️ Aggiungi prodotti al carrello prima di ordinare!"); return; }
+        if(carrello.length === 0) { 
+            showMessage("⚠️ Aggiungi prodotti al carrello prima di ordinare!");
+            return; 
+        }
         const corpo = encodeURIComponent(generaTestoOrdine());
-        window.location.href = `mailto:ordini@camporeggi.it?subject=Ordine%20Camporeggi%20-%20${new Date().toLocaleDateString()}&body=${corpo}`;
+        window.location.href = `mailto:${EMAIL_ORDINI}?subject=Ordine%20Camporeggi%20-%20${new Date().toLocaleDateString('it-IT')}&body=${corpo}`;
     });
 
     // ============================================================
-    // TELEGRAM (usa il TUO bot)
+    // TELEGRAM
     // ============================================================
     document.getElementById("btnTelegram").addEventListener("click", () => {
-        if(carrello.length === 0) { alert("⚠️ Aggiungi prodotti al carrello prima di ordinare!"); return; }
-        const msg = generaTestoOrdine();
-        const encodedMsg = encodeURIComponent(msg);
+        if(carrello.length === 0) { 
+            showMessage("⚠️ Aggiungi prodotti al carrello prima di ordinare!");
+            return; 
+        }
         
         if(TELEGRAM_BOT_USERNAME === "IL_TUO_BOT_USERNAME") {
-            alert("⚠️ Configura il nome del tuo bot Telegram! Modifica la variabile TELEGRAM_BOT_USERNAME nel codice.");
+            showMessage("⚠️ Configura il nome del tuo bot Telegram! Contatta l'amministratore del sito.");
             return;
         }
         
-        // Apre la chat con il bot e precompila il messaggio
-        window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}?start=ordine_${Date.now()}&text=${encodedMsg}`, '_blank');
+        const msg = generaTestoOrdine();
+        const encodedMsg = encodeURIComponent(msg);
+        
+        window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}?start=ordine_${Date.now()}`, '_blank');
+        
+        navigator.clipboard.writeText(msg);
+        showMessage("✅ Ordine copiato! Incollalo nella chat del bot Telegram.", false);
     });
 
     // Link Telegram nel footer
@@ -500,15 +793,10 @@
         if(TELEGRAM_BOT_USERNAME !== "IL_TUO_BOT_USERNAME") {
             window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}`, '_blank');
         } else {
-            alert("Configura il bot Telegram nel codice");
+            showMessage("Configura il bot Telegram nel codice");
         }
     });
 
     // ============================================================
-    // AVVIO
-    // ============================================================
-    renderCatalogo();
-    aggiornaCarrello();
-</script>
-</body>
-</html>
+    // RECUPERA CARRELLO SALVATO
+    // =========================================================
