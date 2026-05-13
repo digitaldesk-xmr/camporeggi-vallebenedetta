@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camporeggi Valle Benedetta - Pasta fresca, sughi, carni e dolci</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #fef9f0;
+            color: #2c2418;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, .hero-text {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header Livorno + Valle Benedetta */
+        .hero {
+            background: linear-gradient(135deg, #1e3b2c 0%, #2b5e3c 40%, #b3c9b0 100%);
+            color: white;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "⚓🌊";
+            font-size: 120px;
+            position: absolute;
+            bottom: 0;
+            right: 20px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: "⛰️🌿";
+            font-size: 100px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-top: 16px;
+            color: #e9f5e1;
+        }
+
+        .badge-livorno {
+            display: inline-block;
+            background: #004d73;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .badge-valle {
+            display: inline-block;
+            background: #6f4e2e;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Categorie */
+        .categoria {
+            margin-top: 48px;
+            border-bottom: 2px solid #e2cfb3;
+            padding-bottom: 8px;
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+        }
+
+        .prodotti-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .card-prodotto {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+            border: 1px solid #ede0ce;
+        }
+
+        .card-prodotto:hover {
+            transform: translateY(-4px);
+        }
+
+        .img-placeholder {
+            background: #e9e1d4;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Fallback se non c'è immagine */
+        .img-placeholder .no-img {
+            font-size: 3rem;
+            color: #7b5a3b;
+            font-weight: bold;
+        }
+
+        .info-prodotto {
+            padding: 20px;
+        }
+
+        .nome-prodotto {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 6px;
+        }
+
+        .prezzo {
+            color: #b45f2b;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .ordine-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        button.aggiungi {
+            background: #2c5e3a;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        button.aggiungi:hover {
+            background: #1e4529;
+        }
+
+        /* Carrello */
+        .carrello-sidebar {
+            background: #fff7ef;
+            border-radius: 32px;
+            padding: 24px;
+            margin: 40px 0;
+            border: 1px solid #e9dacb;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .carrello-item {
+            border-bottom: 1px solid #e2cfb3;
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .totale {
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn-ordina {
+            background: #004d73;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-right: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-ordina:hover {
+            background: #003a57;
+        }
+
+        .btn-telegram {
+            background: #27a065;
+        }
+
+        .btn-telegram:hover {
+            background: #1d7a4c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 48px 0;
+            color: #6c5b4b;
+            border-top: 1px solid #e9dacb;
+            margin-top: 48px;
+        }
+
+        .svuota-carrello {
+            background: none;
+            border: none;
+            color: #b45f2b;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 2.2rem; }
+            .prodotti-grid { grid-template-columns: 1fr; }
+            .btn-ordina { display: block; width: 100%; margin-bottom: 12px; }
+        }
+    </style>
+</head>
+<body>
+<div class="hero">
+    <div class="container">
+        <div>
+            <span class="badge-livorno">⚓ LIVORNO</span>
+            <span class="badge-valle">🌿 VALLE BENEDETTA</span>
+        </div>
+        <h1>Camporeggi<br>Valle Benedetta</h1>
+        <p>Pasta fresca sottovuoto, sughi di cinghiale e cervo, carni, pappa al pomodoro, farro, lasagne, dolci monodose e torte per compleanni. Ordini B2B via email o Telegram.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="carrello-sidebar" id="carrelloDiv">
+        <h3>📦 Riepilogo ordine (pesi a piacere, anche frazioni di kg)</h3>
+        <div id="listaCarrello"></div>
+        <div class="totale">Totale: € <span id="totaleCarrello">0.00</span></div>
+        <button class="btn-ordina" id="btnEmail">✉️ Invia ordine via email</button>
+        <button class="btn-ordina btn-telegram" id="btnTelegram">📱 Ordina su Telegram</button>
+        <button class="svuota-carrello" id="svuotaCarrello">🗑️ Svuota carrello</button>
+        <p style="font-size: 0.75rem; margin-top: 12px;">* Email: si apre il tuo client di posta. Telegram: apri chat con il nostro bot.</p>
+        <p style="font-size: 0.7rem; color: #b45f2b;">🎂 Ordini anche per compleanni e feste - disponibili monodose e formato famiglia!</p>
+    </div>
+
+    <div id="catalogo"></div>
+
+    <footer>
+        <strong>Camporeggi Valle Benedetta - Livorno</strong><br>
+        Prodotti sottovuoto e freschi | Spedizioni e ritiro su ordinazione<br>
+        📧 Email: <a href="mailto:ordini@camporeggi.it" style="color:#2c5e3a;">ordini@camporeggi.it</a> | 
+        📱 Telegram: <a href="#" style="color:#2c5e3a;" id="telegramLink">@CamporeggiOrdiniBot</a><br>
+        📍 Via della Valle Benedetta, Livorno - Italia
+    </footer>
+</div>
+
+<script>
+    // ============================================================
+    // DATABASE PRODOTTI CON PERCORSI IMMAGINI
+    // ============================================================
+    // 🔧 DA MODIFICARE: metti il nome del TUO bot Telegram qui sotto
+    const TELEGRAM_BOT_USERNAME = "IL_TUO_BOT_USERNAME";  // <--- CAMBIA CON IL TUO @username (senza @)
+    
+    const catalogoProdotti = [
+        // PASTA FRESCA
+        { nome: "Tagliolini freschi", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", imgUrl: "img/pasta/tagliolini.jpg" },
+        { nome: "Pappardelle fresche", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", imgUrl: "img/pasta/pappardelle.jpg" },
+        
+        // SUGHI
+        { nome: "Ragù di manzo", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", imgUrl: "img/sughi/ragu.jpg" },
+        { nome: "Cinghiale in umido (pezzi grandi)", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", imgUrl: "img/sughi/cinghiale.jpg" },
+        { nome: "Cervo in umido", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", imgUrl: "img/sughi/cervo.jpg" },
+        
+        // CARNI
+        { nome: "Peposo", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", imgUrl: "img/carni/peposo.jpg" },
+        { nome: "Arista", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", imgUrl: "img/carni/arista.jpg" },
+        { nome: "Roast beef", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", imgUrl: "img/carni/roastbeef.jpg" },
+        
+        // FORNO (peso fisso)
+        { nome: "Pinse 200g (pomodoro/patate/cipolla/zucchine)", prezzoKg: 10, categoria: "🔥 Forno", imgUrl: "img/forno/pinse.jpg", fissoPeso: 0.2, prezzoFisso: 2 },
+        { nome: "Pinse 400g (pomodoro/patate/cipolla/zucchine)", prezzoKg: 7.5, categoria: "🔥 Forno", imgUrl: "img/forno/pinse.jpg", fissoPeso: 0.4, prezzoFisso: 3 },
+        { nome: "Schiacciata al carbone 200g", prezzoKg: 10, categoria: "🔥 Forno", imgUrl: "img/forno/schiacciata.jpg", fissoPeso: 0.2, prezzoFisso: 2 },
+        { nome: "Schiacciata al carbone 400g", prezzoKg: 7.5, categoria: "🔥 Forno", imgUrl: "img/forno/schiacciata.jpg", fissoPeso: 0.4, prezzoFisso: 3 },
+        
+        // ZUPPE E PRIMI
+        { nome: "Pappa al pomodoro", prezzoKg: 8, categoria: "🥣 Zuppe e primi", imgUrl: "img/primi/pappa.jpg" },
+        { nome: "Farro cotto con pomodorini", prezzoKg: 7, categoria: "🥣 Zuppe e primi", imgUrl: "img/primi/farro.jpg" },
+        { nome: "Lasagne (in contenitore)", prezzoKg: 13, categoria: "🥣 Zuppe e primi", imgUrl: "img/primi/lasagne.jpg" },
+        { nome: "Melanzane alla parmigiana", prezzoKg: 7, categoria: "🥣 Zuppe e primi", imgUrl: "img/primi/melanzane.jpg" },
+        
+        // DOLCI
+        { nome: "Crostata albicocca", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/crostata.jpg" },
+        { nome: "Crostata frutti di bosco", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/crostata.jpg" },
+        { nome: "Crostata fragole", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/crostata.jpg" },
+        { nome: "Cheesecake cotta/cruda", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/cheesecake.jpg" },
+        { nome: "Torta del nonno", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/torranonno.jpg" },
+        { nome: "Torta della nonna", prezzoKg: 15, categoria: "🍰 Dolci (kg/monodose)", imgUrl: "img/dolci/torranonna.jpg" }
+    ];
+
+    let carrello = [];
+
+    // ============================================================
+    // FUNZIONE PER MOSTRARE IL CATALOGO
+    // ============================================================
+    function renderCatalogo() {
+        const container = document.getElementById("catalogo");
+        let html = "";
+        const categorie = [...new Map(catalogoProdotti.map(p => [p.categoria, p.categoria]))].map(c => c[0]);
+        
+        for(let cat of categorie) {
+            html += `<h2 class="categoria">${cat}</h2><div class="prodotti-grid">`;
+            const prodottiCat = catalogoProdotti.filter(p => p.categoria === cat);
+            for(let prod of prodottiCat) {
+                const prezzoMostra = prod.prezzoFisso ? `${prod.prezzoFisso}€ (peso ${prod.fissoPeso*1000}g)` : `${prod.prezzoKg}€/kg`;
+                html += `
+                    <div class="card-prodotto">
+                        <div class="img-placeholder">
+                            <img src="${prod.imgUrl}" alt="${prod.nome}" onerror="this.src=''; this.parentElement.innerHTML='<div class=\'no-img\'>📷<br>Foto non disponibile</div>'">
+                        </div>
+                        <div class="info-prodotto">
+                            <div class="nome-prodotto">${prod.nome}</div>
+                            <div class="prezzo">💰 ${prezzoMostra}</div>
+                `;
+                
+                if(!prod.fissoPeso) {
+                    html += `
+                        <div class="ordine-row">
+                            <input type="number" step="0.1" min="0.1" value="0.5" id="kg-${prod.nome.replace(/\s/g,'')}" placeholder="kg">
+                            <button class="aggiungi" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}">Aggiungi</button>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="ordine-row">
+                            <button class="aggiungi" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}" data-fisso="${prod.fissoPeso}" data-prezzoFisso="${prod.prezzoFisso}">Aggiungi pezzo (${prod.fissoPeso*1000}g)</button>
+                        </div>
+                    `;
+                }
+                html += `</div></div>`;
+            }
+            html += `</div>`;
+        }
+        container.innerHTML = html;
+
+        // Attach event listeners
+        document.querySelectorAll(".aggiungi").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const nome = btn.dataset.nome;
+                const prezzoKg = parseFloat(btn.dataset.prezzoKg);
+                const fisso = btn.dataset.fisso;
+                const prezzoFisso = btn.dataset.prezzoFisso ? parseFloat(btn.dataset.prezzoFisso) : null;
+                let pesoKg = 0;
+                let prezzoTot = 0;
+                
+                if(fisso && prezzoFisso) {
+                    pesoKg = parseFloat(fisso);
+                    prezzoTot = prezzoFisso;
+                } else {
+                    const inputId = `kg-${nome.replace(/\s/g,'')}`;
+                    const inputElem = document.getElementById(inputId);
+                    if(inputElem) pesoKg = parseFloat(inputElem.value);
+                    else pesoKg = 0.5;
+                    if(isNaN(pesoKg) || pesoKg <= 0) pesoKg = 0.1;
+                    prezzoTot = pesoKg * prezzoKg;
+                }
+                carrello.push({ nome, pesoKg, prezzoUnitarioKg: prezzoKg, prezzoTotale: prezzoTot });
+                aggiornaCarrello();
+            });
+        });
+    }
+
+    // ============================================================
+    // FUNZIONE CARRELLO
+    // ============================================================
+    function aggiornaCarrello() {
+        const listaDiv = document.getElementById("listaCarrello");
+        let totale = 0;
+        let htmlItems = "";
+        
+        carrello.forEach((item, idx) => {
+            totale += item.prezzoTotale;
+            htmlItems += `<div class="carrello-item">
+                <span><strong>${item.nome}</strong> - ${item.pesoKg.toFixed(2)} kg → € ${item.prezzoTotale.toFixed(2)}</span>
+                <button style="background:none; border:none; color:#b00020; cursor:pointer; font-size:1.2rem;" onclick="rimuoviItem(${idx})">🗑️</button>
+            </div>`;
+        });
+        
+        if(carrello.length === 0) htmlItems = "<p>Nessun prodotto aggiunto. Scegli peso o pezzi e clicca Aggiungi.</p>";
+        listaDiv.innerHTML = htmlItems;
+        document.getElementById("totaleCarrello").innerText = totale.toFixed(2);
+    }
+
+    window.rimuoviItem = function(idx) {
+        carrello.splice(idx, 1);
+        aggiornaCarrello();
+    }
+
+    document.getElementById("svuotaCarrello")?.addEventListener("click", () => {
+        carrello = [];
+        aggiornaCarrello();
+    });
+
+    // ============================================================
+    // GENERA TESTO ORDINE
+    // ============================================================
+    function generaTestoOrdine() {
+        let testo = "🛒 ORDINE CAMPOREGGI VALLE BENEDETTA\n";
+        testo += `📅 Data: ${new Date().toLocaleString()}\n`;
+        testo += "=" .repeat(40) + "\n\n";
+        let totale = 0;
+        
+        carrello.forEach(item => {
+            testo += `• ${item.nome}: ${item.pesoKg.toFixed(2)} kg → € ${item.prezzoTotale.toFixed(2)}\n`;
+            totale += item.prezzoTotale;
+        });
+        
+        testo += "\n" + "=".repeat(40) + "\n";
+        testo += `💰 TOTALE COMPLESSIVO: € ${totale.toFixed(2)}\n\n`;
+        testo += "📦 Consegna a:\n";
+        testo += "   Nome: _______________\n";
+        testo += "   Indirizzo: _______________\n";
+        testo += "   Telefono: _______________\n\n";
+        testo += "🎂 Note (compleanni, monodose, personalizzazioni):\n   _________________\n\n";
+        testo += "Grazie per l'ordine! 🍝🌿";
+        
+        return testo;
+    }
+
+    // ============================================================
+    // EMAIL
+    // ============================================================
+    document.getElementById("btnEmail").addEventListener("click", () => {
+        if(carrello.length === 0) { alert("⚠️ Aggiungi prodotti al carrello prima di ordinare!"); return; }
+        const corpo = encodeURIComponent(generaTestoOrdine());
+        window.location.href = `mailto:ordini@camporeggi.it?subject=Ordine%20Camporeggi%20-%20${new Date().toLocaleDateString()}&body=${corpo}`;
+    });
+
+    // ============================================================
+    // TELEGRAM (usa il TUO bot)
+    // ============================================================
+    document.getElementById("btnTelegram").addEventListener("click", () => {
+        if(carrello.length === 0) { alert("⚠️ Aggiungi prodotti al carrello prima di ordinare!"); return; }
+        const msg = generaTestoOrdine();
+        const encodedMsg = encodeURIComponent(msg);
+        
+        if(TELEGRAM_BOT_USERNAME === "IL_TUO_BOT_USERNAME") {
+            alert("⚠️ Configura il nome del tuo bot Telegram! Modifica la variabile TELEGRAM_BOT_USERNAME nel codice.");
+            return;
+        }
+        
+        // Apre la chat con il bot e precompila il messaggio
+        window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}?start=ordine_${Date.now()}&text=${encodedMsg}`, '_blank');
+    });
+
+    // Link Telegram nel footer
+    document.getElementById("telegramLink")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        if(TELEGRAM_BOT_USERNAME !== "IL_TUO_BOT_USERNAME") {
+            window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}`, '_blank');
+        } else {
+            alert("Configura il bot Telegram nel codice");
+        }
+    });
+
+    // ============================================================
+    // AVVIO
+    // ============================================================
+    renderCatalogo();
+    aggiornaCarrello();
+</script>
+</body>
+</html>
