@@ -1,392 +1,192 @@
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
+    <title>TEST CAMPOREGGI</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camporeggi Valle Benedetta – Pasta fresca, sughi, carni e dolci</title>
     <style>
-        /* SOLO STILE - NIENTE JAVASCRIPT MODIFICATO */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #fef9f0; color: #2c2418; line-height: 1.5; }
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-        
-        /* Hero */
-        .hero { background: linear-gradient(135deg, #1e3b2c 0%, #2b5e3c 50%, #b3c9b0 100%); color: white; padding: 60px 0; position: relative; overflow: hidden; }
-        .hero::before { content: "⚓🌊"; font-size: 120px; position: absolute; bottom: -20px; right: 20px; opacity: 0.1; }
-        .hero::after { content: "⛰️🌿"; font-size: 100px; position: absolute; top: -20px; left: 20px; opacity: 0.1; }
-        .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-        .hero p { font-size: 1.1rem; max-width: 600px; color: #eef5e8; }
-        .badge-livorno, .badge-valle { display: inline-block; padding: 5px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; margin-right: 8px; }
-        .badge-livorno { background: #004d73; }
-        .badge-valle { background: #8b5a2b; }
-        
-        /* Prodotti */
-        .categoria { font-size: 1.8rem; margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 2px solid #e2cfb3; }
-        .prodotti-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
-        .card-prodotto { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); border: 1px solid #ede0ce; }
-        .card-prodotto:hover { transform: translateY(-4px); }
-        .img-placeholder { background: #e9e1d4; height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
-        .info-prodotto { padding: 20px; }
-        .nome-prodotto { font-weight: 700; font-size: 1.2rem; margin-bottom: 6px; }
-        .prezzo { color: #b45f2b; font-weight: bold; margin: 10px 0; display: inline-block; background: #fef3e8; padding: 4px 12px; border-radius: 30px; font-size: 0.9rem; }
-        .ordine-row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
-        .peso-input { flex: 2; }
-        .peso-input label { font-size: 0.65rem; color: #6c5b4b; display: block; }
-        .peso-input input { width: 100%; padding: 8px 10px; border: 1px solid #e2cfb3; border-radius: 30px; font-size: 0.85rem; }
-        .esempi-peso { font-size: 0.55rem; color: #8b7a68; margin-top: 4px; }
-        button.aggiungi { background: #2c5e3a; color: white; border: none; padding: 8px 18px; border-radius: 30px; cursor: pointer; font-weight: 600; }
-        button.aggiungi:hover { background: #1e4529; }
-        
-        /* Carrello */
-        .carrello-sidebar { background: #fffaf3; border-radius: 28px; padding: 24px; margin: 40px 0; border: 1px solid #ede0ce; }
-        .carrello-item { border-bottom: 1px solid #e9dacb; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-        .totale { font-size: 1.5rem; font-weight: 800; margin: 20px 0 15px; text-align: right; color: #2c5e3a; }
-        .btn-ordina { background: #004d73; color: white; border: none; padding: 10px 24px; border-radius: 40px; font-weight: bold; font-size: 0.95rem; cursor: pointer; margin-right: 10px; }
-        .btn-telegram { background: #27a065; }
-        .svuota-carrello { background: none; border: none; color: #b45f2b; text-decoration: underline; cursor: pointer; margin-top: 10px; font-size: 0.8rem; }
-        
-        /* Contatti e mappa */
-        .contatti-section { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 50px 0; background: white; border-radius: 28px; overflow: hidden; }
-        .contatti-info { padding: 30px; background: #fffaf3; }
-        .contatti-info h3 { font-size: 1.8rem; margin-bottom: 25px; color: #1e3b2c; }
-        .contatto-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: white; padding: 12px 18px; border-radius: 50px; }
-        .contatto-icon { font-size: 1.8rem; }
-        .contatto-details strong { display: block; font-size: 0.65rem; text-transform: uppercase; color: #8b7a68; }
-        .contatto-details a, .contatto-details span { font-size: 0.95rem; font-weight: 600; color: #2c2418; text-decoration: none; }
-        .consegne { background: #eef3e9; border-radius: 20px; padding: 18px; text-align: center; margin-top: 20px; }
-        .map-container iframe { width: 100%; height: 100%; min-height: 400px; }
-        footer { text-align: center; padding: 35px 0; color: #6c5b4b; border-top: 1px solid #e9dacb; margin-top: 40px; font-size: 0.8rem; }
-        .alert-message { background: #fff3cd; padding: 10px 18px; border-radius: 30px; margin-bottom: 20px; display: none; font-size: 0.85rem; }
-        
-        @media (max-width: 700px) {
-            .hero h1 { font-size: 2rem; }
-            .contatti-section { grid-template-columns: 1fr; }
-            .btn-ordina { margin-bottom: 10px; display: inline-block; }
-            .ordine-row { flex-direction: column; }
-            button.aggiungi { width: 100%; }
-        }
+        body { font-family: Arial; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .prodotto { border: 1px solid #ccc; padding: 15px; margin: 10px 0; border-radius: 10px; }
+        button { background: green; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; }
+        .carrello { background: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 10px; }
+        .item { border-bottom: 1px solid #ccc; padding: 8px 0; }
+        .totale { font-size: 1.3em; font-weight: bold; color: darkgreen; margin-top: 15px; }
+        input { width: 80px; padding: 5px; }
+        .prezzo-calcolato { color: blue; margin-left: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
-<div class="hero">
-    <div class="container">
-        <div>
-            <span class="badge-livorno">⚓ LIVORNO</span>
-            <span class="badge-valle">🌿 VALLE BENEDETTA</span>
-        </div>
-        <h1>Camporeggi<br>Valle Benedetta</h1>
-        <p>Pasta fresca sottovuoto, sughi di cinghiale e cervo, carni, pappa al pomodoro, farro, lasagne, dolci monodose e torte per compleanni. Ordini B2B via email o Telegram.</p>
-    </div>
-</div>
-
-<div class="container">
-    <div id="alertMessage" class="alert-message"></div>
-
-    <div class="carrello-sidebar">
-        <h3>📦 Riepilogo ordine</h3>
-        <p style="font-size: 0.75rem; margin-bottom: 10px;">⚖️ Pesi da 0.050 kg (50g) a 5 kg. Esempi: 0.050 = 50g, 0.150 = 150g, 0.550 = 550g</p>
-        <div id="listaCarrello"></div>
-        <div class="totale">💰 Totale: € <span id="totaleCarrello">0.00</span></div>
-        <button class="btn-ordina" id="btnEmail">✉️ Invia ordine via email</button>
-        <button class="btn-ordina btn-telegram" id="btnTelegram">📱 Ordina su Telegram</button>
-        <div><button class="svuota-carrello" id="svuotaCarrello">🗑️ Svuota carrello</button></div>
-        <p style="font-size: 0.65rem; color: #b45f2b; margin-top: 12px;">🎂 Ordini anche per compleanni e feste - monodose e formato famiglia</p>
+    <h1>🏪 Camporeggi Valle Benedetta</h1>
+    <p>📧 ops.channel@proton.me | 📱 +39 331 621 9512 | 🤖 @MarketHubShop_bot</p>
+    
+    <div id="prodotti"></div>
+    
+    <div class="carrello">
+        <h3>🛒 Carrello</h3>
+        <div id="carrelloLista"></div>
+        <div class="totale">💰 Totale: € <span id="totale">0.00</span></div>
+        <button id="emailBtn">✉️ Ordina via Email</button>
+        <button id="telegramBtn">📱 Ordina su Telegram</button>
+        <button id="svuotaBtn">🗑️ Svuota</button>
     </div>
 
-    <div id="catalogo"></div>
+    <script>
+        // DATABASE PRODOTTI
+        const prodotti = [
+            { nome: "Tagliolini freschi", prezzoKg: 8 },
+            { nome: "Pappardelle fresche", prezzoKg: 8 },
+            { nome: "Ragù di manzo", prezzoKg: 12 },
+            { nome: "Roast beef", prezzoKg: 20 },
+            { nome: "Melanzane alla parmigiana", prezzoKg: 7 }
+        ];
 
-    <div class="contatti-section">
-        <div class="contatti-info">
-            <h3>📞 Contattaci</h3>
-            <div class="contatto-item">
-                <div class="contatto-icon">📧</div>
-                <div class="contatto-details">
-                    <strong>Email</strong>
-                    <a href="mailto:ops.channel@proton.me">ops.channel@proton.me</a>
-                </div>
-            </div>
-            <div class="contatto-item">
-                <div class="contatto-icon">📱</div>
-                <div class="contatto-details">
-                    <strong>Telefono / WhatsApp</strong>
-                    <a href="tel:+393316219512">+39 331 621 9512</a>
-                </div>
-            </div>
-            <div class="contatto-item">
-                <div class="contatto-icon">📍</div>
-                <div class="contatto-details">
-                    <strong>Indirizzo</strong>
-                    <span>Trattoria Camporeggi - Casa della Nella, Livorno</span>
-                </div>
-            </div>
-            <div class="consegne">
-                <p>🚚 Consegne effettuate il <strong>Lunedì, Mercoledì e Venerdì</strong></p>
-                <p style="font-size:0.7rem; margin-top:5px;">Ordina entro le 18:00 del giorno precedente</p>
-            </div>
-        </div>
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4091.4124450406225!2d10.404901365665333!3d43.52182714633443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d5e94bb7cd312f%3A0xcd6bdb80b0bfde9!2sTrattoria%20Camporeggi%20-%20Casa%20della%20Nella!5e0!3m2!1sit!2sit!4v1778710984580!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-    </div>
+        let carrello = [];
 
-    <footer>
-        <strong>Camporeggi Valle Benedetta - Livorno</strong><br>
-        Prodotti sottovuoto e freschi | Spedizioni e ritiro su ordinazione<br>
-        📧 <a href="mailto:ops.channel@proton.me">ops.channel@proton.me</a> | 
-        📱 <a href="tel:+393316219512">+39 331 621 9512</a> |
-        📱 <a href="#" id="telegramFooterLink">@MarketHubShop_bot</a>
-    </footer>
-</div>
-
-<script>
-// ============================================================
-// JAVASCRIPT IDENTICO AL TEST CHE FUNZIONA (NESSUN CAMBIAMENTO)
-// ============================================================
-
-const prodottiLista = [
-    { nome: "Tagliolini freschi", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
-    { nome: "Pappardelle fresche", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
-    { nome: "Ragù di manzo", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", emoji: "🍲" },
-    { nome: "Cinghiale in umido", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🐗" },
-    { nome: "Cervo in umido", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🦌" },
-    { nome: "Peposo", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
-    { nome: "Arista", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🐖" },
-    { nome: "Roast beef", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
-    { nome: "Pinse 200g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🍕", fisso: true, pesoFisso: 0.2, prezzoFisso: 2 },
-    { nome: "Pinse 400g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🍕", fisso: true, pesoFisso: 0.4, prezzoFisso: 3 },
-    { nome: "Schiacciata carbone 200g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.2, prezzoFisso: 2 },
-    { nome: "Schiacciata carbone 400g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.4, prezzoFisso: 3 },
-    { nome: "Pappa al pomodoro", prezzoKg: 8, categoria: "🥣 Zuppe e primi", emoji: "🍅" },
-    { nome: "Farro cotto", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🌾" },
-    { nome: "Lasagne", prezzoKg: 13, categoria: "🥣 Zuppe e primi", emoji: "🍽️" },
-    { nome: "Melanzane parmigiana", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🍆" },
-    { nome: "Crostata albicocca", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-    { nome: "Crostata frutti di bosco", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
-    { nome: "Cheesecake", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-    { nome: "Torta del nonno", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-    { nome: "Torta della nonna", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" }
-];
-
-let carrelloItems = [];
-
-function showMessage(msg, isSuccess = false) {
-    const alertDiv = document.getElementById("alertMessage");
-    alertDiv.textContent = msg;
-    alertDiv.style.display = "block";
-    alertDiv.style.background = isSuccess ? "#d4edda" : "#fff3cd";
-    alertDiv.style.color = isSuccess ? "#155724" : "#856404";
-    setTimeout(() => alertDiv.style.display = "none", 3000);
-}
-
-function aggiungiAlCarrello(nome, prezzoKg, pesoKg, prezzoFisso = null, pesoFisso = null) {
-    let prezzoTotale;
-    let pesoFinale;
-    
-    if (prezzoFisso !== null && pesoFisso !== null) {
-        prezzoTotale = prezzoFisso;
-        pesoFinale = pesoFisso;
-    } else {
-        let peso = parseFloat(pesoKg);
-        if (isNaN(peso) || peso < 0.05) {
-            showMessage("⚠️ Peso minimo 0.050 kg (50 grammi)");
-            return;
-        }
-        if (peso > 5) {
-            showMessage("⚠️ Peso massimo 5 kg");
-            return;
-        }
-        prezzoTotale = peso * prezzoKg;
-        prezzoTotale = Math.round(prezzoTotale * 100) / 100;
-        pesoFinale = peso;
-    }
-    
-    carrelloItems.push({
-        nome: nome,
-        peso: pesoFinale,
-        prezzoTotale: prezzoTotale
-    });
-    
-    aggiornaCarrello();
-    
-    let msgPeso = pesoFinale < 1 ? `${(pesoFinale*1000).toFixed(0)}g` : `${pesoFinale.toFixed(2)}kg`;
-    showMessage(`✅ ${nome} - ${msgPeso} = €${prezzoTotale.toFixed(2)}`, true);
-}
-
-function mostraProdotti() {
-    const container = document.getElementById('catalogo');
-    const categorie = {};
-    for (let p of prodottiLista) {
-        if (!categorie[p.categoria]) categorie[p.categoria] = [];
-        categorie[p.categoria].push(p);
-    }
-    
-    let html = '';
-    for (let cat in categorie) {
-        html += `<h2 class="categoria">${cat}</h2><div class="prodotti-grid">`;
-        for (let prod of categorie[cat]) {
-            if (prod.fisso) {
-                html += `
-                    <div class="card-prodotto">
-                        <div class="img-placeholder">${prod.emoji}</div>
-                        <div class="info-prodotto">
-                            <div class="nome-prodotto">${prod.nome}</div>
-                            <div class="prezzo">💰 ${prod.prezzoFisso}€ (${prod.pesoFisso*1000}g)</div>
-                            <div class="ordine-row">
-                                <button class="aggiungi-fisso" data-nome="${prod.nome}" data-prezzo="${prod.prezzoFisso}" data-peso="${prod.pesoFisso}">➕ Aggiungi</button>
-                            </div>
-                        </div>
-                    </div>
+        // Mostra prodotti
+        function mostraProdotti() {
+            const container = document.getElementById('prodotti');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < prodotti.length; i++) {
+                const p = prodotti[i];
+                const div = document.createElement('div');
+                div.className = 'prodotto';
+                div.innerHTML = `
+                    <strong>${p.nome}</strong><br>
+                    Prezzo: €${p.prezzoKg}/kg<br>
+                    <input type="number" id="peso_${i}" step="0.05" min="0.05" value="0.5" style="width:80px;"> kg
+                    <button onclick="aggiungi('${p.nome}', ${p.prezzoKg}, ${i})">➕ Aggiungi</button>
+                    <span id="preview_${i}" class="prezzo-calcolato"></span>
                 `;
-            } else {
-                const idPeso = `peso_${prod.nome.replace(/\s/g, '').replace(/[()]/g, '')}`;
+                container.appendChild(div);
+                
+                // Anteprima prezzo
+                const input = document.getElementById(`peso_${i}`);
+                const preview = document.getElementById(`preview_${i}`);
+                input.addEventListener('input', function() {
+                    let val = parseFloat(this.value);
+                    if (isNaN(val)) val = 0;
+                    let prezzoAnteprima = val * p.prezzoKg;
+                    preview.innerHTML = `= €${prezzoAnteprima.toFixed(2)}`;
+                });
+                input.dispatchEvent(new Event('input'));
+            }
+        }
+
+        // Aggiungi al carrello
+        window.aggiungi = function(nome, prezzoKg, index) {
+            const inputElem = document.getElementById(`peso_${index}`);
+            let peso = parseFloat(inputElem.value);
+            
+            console.log("Nome:", nome);
+            console.log("PrezzoKg:", prezzoKg);
+            console.log("Peso:", peso);
+            
+            if (isNaN(peso)) {
+                alert("Peso non valido!");
+                return;
+            }
+            if (peso < 0.05) {
+                alert("Peso minimo 0.05 kg (50 grammi)");
+                return;
+            }
+            
+            const totale = peso * prezzoKg;
+            const totaleArrotondato = Math.round(totale * 100) / 100;
+            
+            console.log("Totale calcolato:", totaleArrotondato);
+            
+            carrello.push({
+                nome: nome,
+                peso: peso,
+                prezzoTotale: totaleArrotondato
+            });
+            
+            aggiornaCarrello();
+            alert(`✅ Aggiunto: ${nome} - ${(peso*1000).toFixed(0)}g = €${totaleArrotondato.toFixed(2)}`);
+        };
+
+        // Aggiorna carrello
+        function aggiornaCarrello() {
+            const listaDiv = document.getElementById('carrelloLista');
+            let totale = 0;
+            let html = '';
+            
+            for (let i = 0; i < carrello.length; i++) {
+                const item = carrello[i];
+                totale += item.prezzoTotale;
+                const pesoMostra = item.peso < 1 ? `${(item.peso*1000).toFixed(0)}g` : `${item.peso.toFixed(2)}kg`;
                 html += `
-                    <div class="card-prodotto">
-                        <div class="img-placeholder">${prod.emoji}</div>
-                        <div class="info-prodotto">
-                            <div class="nome-prodotto">${prod.nome}</div>
-                            <div class="prezzo">💰 ${prod.prezzoKg}€/kg</div>
-                            <div class="ordine-row">
-                                <div class="peso-input">
-                                    <label>⚖️ Peso (kg):</label>
-                                    <input type="number" step="0.01" min="0.05" value="0.5" id="${idPeso}">
-                                    <div class="esempi-peso">es: 0.05 (50g) | 0.25 (250g) | 0.55 | 1.2</div>
-                                </div>
-                                <button class="aggiungi-variabile" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}" data-inputid="${idPeso}">➕ Aggiungi</button>
-                            </div>
-                        </div>
+                    <div class="item">
+                        ${item.nome} - ${pesoMostra} = €${item.prezzoTotale.toFixed(2)}
+                        <button onclick="rimuovi(${i})" style="background:red; color:white; margin-left:10px;">X</button>
                     </div>
                 `;
             }
+            
+            if (carrello.length === 0) {
+                html = '<p>Carrello vuoto</p>';
+            }
+            
+            listaDiv.innerHTML = html;
+            document.getElementById('totale').innerText = totale.toFixed(2);
         }
-        html += `</div>`;
-    }
-    container.innerHTML = html;
-    
-    document.querySelectorAll(".aggiungi-fisso").forEach(btn => {
-        btn.addEventListener("click", () => {
-            aggiungiAlCarrello(btn.dataset.nome, 0, 0, parseFloat(btn.dataset.prezzo), parseFloat(btn.dataset.peso));
-        });
-    });
-    
-    document.querySelectorAll(".aggiungi-variabile").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const nome = btn.dataset.nome;
-            const prezzoKg = parseFloat(btn.dataset.prezzoKg);
-            const inputElem = document.getElementById(btn.dataset.inputid);
-            let pesoKg = inputElem ? parseFloat(inputElem.value) : 0.5;
-            if (isNaN(pesoKg)) pesoKg = 0.5;
-            aggiungiAlCarrello(nome, prezzoKg, pesoKg, null, null);
-        });
-    });
-}
 
-function aggiornaCarrello() {
-    const listaDiv = document.getElementById("listaCarrello");
-    let totale = 0;
-    let htmlItems = "";
-    
-    if (carrelloItems.length === 0) {
-        htmlItems = "<p style='text-align:center; color:#6c5b4b;'>🛒 Carrello vuoto</p>";
-    } else {
-        for (let i = 0; i < carrelloItems.length; i++) {
-            const item = carrelloItems[i];
-            totale += item.prezzoTotale;
-            const pesoMostra = item.peso < 1 ? `${(item.peso * 1000).toFixed(0)} grammi` : `${item.peso.toFixed(2)} kg`;
-            htmlItems += `
-                <div class="carrello-item">
-                    <div><strong>${item.nome}</strong><br><span style="font-size:0.75rem;">⚖️ ${pesoMostra} → € ${item.prezzoTotale.toFixed(2)}</span></div>
-                    <button style="background:#f0e0d0; border:none; padding:5px 10px; border-radius:30px; cursor:pointer;" onclick="rimuoviItem(${i})">🗑️</button>
-                </div>
-            `;
-        }
-    }
-    listaDiv.innerHTML = htmlItems;
-    document.getElementById("totaleCarrello").innerText = totale.toFixed(2);
-    localStorage.setItem("camporeggiCarrello", JSON.stringify(carrelloItems));
-}
-
-window.rimuoviItem = function(idx) {
-    carrelloItems.splice(idx, 1);
-    aggiornaCarrello();
-    showMessage("❌ Prodotto rimosso");
-};
-
-document.getElementById("svuotaCarrello").addEventListener("click", () => {
-    if (carrelloItems.length > 0) {
-        carrelloItems = [];
-        aggiornaCarrello();
-        showMessage("🗑️ Carrello svuotato", true);
-    }
-});
-
-function generaTestoOrdine() {
-    if (carrelloItems.length === 0) {
-        showMessage("⚠️ Carrello vuoto");
-        return null;
-    }
-    let testo = "🛒 ORDINE CAMPOREGGI VALLE BENEDETTA\n";
-    testo += `📅 Data: ${new Date().toLocaleString('it-IT')}\n`;
-    testo += "=".repeat(50) + "\n\n";
-    let totale = 0;
-    
-    for (let i = 0; i < carrelloItems.length; i++) {
-        const item = carrelloItems[i];
-        const pesoMostra = item.peso < 1 ? `${(item.peso * 1000).toFixed(0)} grammi` : `${item.peso.toFixed(2)} kg`;
-        testo += `${i+1}. ${item.nome}\n`;
-        testo += `   📦 Peso: ${pesoMostra}\n`;
-        testo += `   💶 Prezzo: € ${item.prezzoTotale.toFixed(2)}\n\n`;
-        totale += item.prezzoTotale;
-    }
-    
-    testo += "=".repeat(50) + "\n";
-    testo += `💰 TOTALE: € ${totale.toFixed(2)}\n\n`;
-    testo += "─".repeat(50) + "\n";
-    testo += "📦 DATI CONSEGNA:\n";
-    testo += "   Nome: _______________\n";
-    testo += "   Indirizzo: _______________\n";
-    testo += "   Telefono: _______________\n\n";
-    testo += "🎂 NOTE: _______________\n\n";
-    testo += "🚚 CONSEGNE: Lunedì, Mercoledì, Venerdì\n";
-    testo += "🙏 Grazie!\n";
-    testo += "📞 +39 331 621 9512\n";
-    testo += "📧 ops.channel@proton.me";
-    return testo;
-}
-
-document.getElementById("btnEmail").addEventListener("click", () => {
-    const ordine = generaTestoOrdine();
-    if (ordine) {
-        window.location.href = `mailto:ops.channel@proton.me?subject=Ordine%20Camporeggi&body=${encodeURIComponent(ordine)}`;
-    }
-});
-
-document.getElementById("btnTelegram").addEventListener("click", () => {
-    const ordine = generaTestoOrdine();
-    if (ordine) {
-        navigator.clipboard.writeText(ordine);
-        window.open('https://t.me/MarketHubShop_bot', '_blank');
-        showMessage("✅ Ordine copiato! Incollalo nella chat", true);
-    }
-});
-
-document.getElementById("telegramFooterLink")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.open('https://t.me/MarketHubShop_bot', '_blank');
-});
-
-const saved = localStorage.getItem("camporeggiCarrello");
-if (saved) {
-    try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-            carrelloItems = parsed;
+        window.rimuovi = function(idx) {
+            carrello.splice(idx, 1);
             aggiornaCarrello();
-            showMessage("🔄 Carrello recuperato", true);
-        }
-    } catch(e) {}
-}
+        };
 
-mostraProdotti();
-</script>
+        document.getElementById('svuotaBtn').onclick = function() {
+            carrello = [];
+            aggiornaCarrello();
+        };
+
+        // Genera ordine
+        function generaOrdine() {
+            if (carrello.length === 0) {
+                alert("Carrello vuoto!");
+                return null;
+            }
+            
+            let testo = "ORDINE CAMPOREGGI\n";
+            testo += `Data: ${new Date().toLocaleString()}\n`;
+            testo += "=".repeat(40) + "\n\n";
+            let totale = 0;
+            
+            for (let i = 0; i < carrello.length; i++) {
+                const item = carrello[i];
+                const pesoMostra = item.peso < 1 ? `${(item.peso*1000).toFixed(0)} grammi` : `${item.peso.toFixed(2)} kg`;
+                testo += `${i+1}. ${item.nome} - ${pesoMostra} = €${item.prezzoTotale.toFixed(2)}\n`;
+                totale += item.prezzoTotale;
+            }
+            
+            testo += `\nTOTALE: €${totale.toFixed(2)}\n`;
+            testo += "\nDATI CONSEGNA:\n";
+            testo += "Nome: ________\n";
+            testo += "Indirizzo: ________\n";
+            testo += "Telefono: ________\n";
+            testo += "\nConsegne: Lunedì, Mercoledì, Venerdì";
+            
+            return testo;
+        }
+
+        document.getElementById('emailBtn').onclick = function() {
+            const ordine = generaOrdine();
+            if (ordine) {
+                window.location.href = `mailto:ops.channel@proton.me?subject=Ordine&body=${encodeURIComponent(ordine)}`;
+            }
+        };
+
+        document.getElementById('telegramBtn').onclick = function() {
+            const ordine = generaOrdine();
+            if (ordine) {
+                navigator.clipboard.writeText(ordine);
+                window.open('https://t.me/MarketHubShop_bot', '_blank');
+                alert("Ordine copiato!");
+            }
+        };
+
+        mostraProdotti();
+    </script>
 </body>
 </html>
