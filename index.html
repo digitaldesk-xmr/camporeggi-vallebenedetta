@@ -6,352 +6,63 @@
     <title>Camporeggi Valle Benedetta – Pasta fresca, sughi, carni e dolci</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #fef6e8;
-            color: #2c2418;
-            line-height: 1.5;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Hero */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #fef6e8; color: #2c2418; line-height: 1.5; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
         .hero {
-            background: linear-gradient(135deg, #1e3b2c 0%, #2b5e3c 50%, #c5d6b5 100%);
+            background: linear-gradient(120deg, #1e3b2c 0%, #2b5e3c 50%, #c5d6b5 100%);
             color: white;
-            padding: 60px 0;
+            padding: 70px 0;
             position: relative;
             overflow: hidden;
         }
-
-        .hero::before {
-            content: "⚓🌊";
-            font-size: 120px;
-            position: absolute;
-            bottom: -20px;
-            right: 20px;
-            opacity: 0.1;
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: "⛰️🌿";
-            font-size: 100px;
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            opacity: 0.1;
-            pointer-events: none;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            color: #eef5e8;
-        }
-
-        .badge-livorno, .badge-valle {
-            display: inline-block;
-            padding: 5px 14px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-right: 8px;
-        }
+        .hero::before { content: "⚓🌊"; font-size: 150px; position: absolute; bottom: -20px; right: 0; opacity: 0.1; pointer-events: none; }
+        .hero::after { content: "⛰️🌿"; font-size: 130px; position: absolute; top: -20px; left: 0; opacity: 0.1; pointer-events: none; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 0.5rem; }
+        .hero p { font-size: 1.2rem; max-width: 600px; color: #eef5e8; }
+        .badge-livorno, .badge-valle { display: inline-block; padding: 6px 16px; border-radius: 40px; font-size: 0.75rem; font-weight: 600; margin-right: 10px; }
         .badge-livorno { background: #004d73; }
         .badge-valle { background: #8b5a2b; }
-
-        /* Categorie */
-        .categoria {
-            font-size: 1.8rem;
-            margin-top: 50px;
-            margin-bottom: 25px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e2cfb3;
-            display: inline-block;
-        }
-
-        .prodotti-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        /* Card prodotto */
-        .card-prodotto {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 1px solid #ede0ce;
-        }
-
-        .card-prodotto:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.1);
-        }
-
-        .img-placeholder {
-            background: #e9e1d4;
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-        }
-
-        .info-prodotto {
-            padding: 20px;
-        }
-
-        .nome-prodotto {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-
-        .prezzo {
-            color: #b45f2b;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin: 10px 0;
-            background: #fef3e8;
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 30px;
-        }
-
-        .ordine-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-            align-items: flex-end;
-        }
-
-        .peso-input {
-            flex: 2;
-        }
-        .peso-input label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: #6c5b4b;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .peso-input input {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #e2cfb3;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            background: #fffdf9;
-        }
-        .peso-input input:focus {
-            outline: none;
-            border-color: #b45f2b;
-        }
-        .esempi-peso {
-            font-size: 0.55rem;
-            color: #8b7a68;
-            margin-top: 4px;
-        }
-
-        button.aggiungi {
-            background: #2c5e3a;
-            color: white;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 0.8rem;
-            white-space: nowrap;
-        }
-        button.aggiungi:hover {
-            background: #1e4529;
-        }
-
-        .prezzo-anteprima {
-            font-size: 0.7rem;
-            color: #2c5e3a;
-            font-weight: 600;
-            margin-top: 6px;
-            text-align: right;
-        }
-
-        /* Carrello */
-        .carrello-sidebar {
-            background: #fffaf3;
-            border-radius: 28px;
-            padding: 24px;
-            margin: 40px 0;
-            border: 1px solid #ede0ce;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
-        }
-
-        .carrello-item {
-            border-bottom: 1px solid #e9dacb;
-            padding: 12px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .totale {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 20px 0 15px;
-            text-align: right;
-            color: #2c5e3a;
-        }
-
-        .btn-ordina {
-            background: #004d73;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            margin-right: 10px;
-            transition: background 0.2s;
-        }
-        .btn-ordina:hover {
-            background: #003a57;
-        }
-        .btn-telegram {
-            background: #27a065;
-        }
-        .btn-telegram:hover {
-            background: #1d7a4c;
-        }
-        .svuota-carrello {
-            background: none;
-            border: none;
-            color: #b45f2b;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 0.75rem;
-            margin-top: 10px;
-        }
-
-        /* Contatti e mappa */
-        .contatti-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 50px 0;
-            background: white;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px -8px rgba(0,0,0,0.06);
-        }
-        .contatti-info {
-            padding: 30px;
-            background: #fffaf3;
-        }
-        .contatti-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: #1e3b2c;
-        }
-        .contatto-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            background: white;
-            padding: 12px 18px;
-            border-radius: 50px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-        }
-        .contatto-icon {
-            font-size: 1.8rem;
-        }
-        .contatto-details strong {
-            display: block;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #8b7a68;
-        }
-        .contatto-details a, .contatto-details span {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #2c2418;
-            text-decoration: none;
-        }
-        .consegne {
-            background: #eef3e9;
-            border-radius: 20px;
-            padding: 18px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .consegne p {
-            margin: 0;
-            font-weight: 600;
-            color: #1e3b2c;
-        }
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            min-height: 400px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 35px 0;
-            color: #6c5b4b;
-            border-top: 1px solid #e9dacb;
-            margin-top: 40px;
-            font-size: 0.8rem;
-        }
-
-        .alert-message {
-            background: #fff3cd;
-            padding: 10px 18px;
-            border-radius: 30px;
-            margin-bottom: 20px;
-            display: none;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 700px) {
-            .hero h1 { font-size: 2rem; }
+        .categoria { font-size: 2rem; margin-top: 60px; margin-bottom: 28px; padding-bottom: 10px; border-bottom: 3px solid #e2cfb3; display: inline-block; }
+        .prodotti-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .card-prodotto { background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #f0e4d4; }
+        .card-prodotto:hover { transform: translateY(-6px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15); }
+        .img-placeholder { background: #e9e1d4; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .info-prodotto { padding: 22px; }
+        .nome-prodotto { font-weight: 700; font-size: 1.3rem; margin-bottom: 8px; }
+        .prezzo { color: #b45f2b; font-weight: 700; font-size: 1.1rem; margin: 12px 0; background: #fef3e8; display: inline-block; padding: 4px 12px; border-radius: 30px; }
+        .ordine-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; align-items: flex-end; }
+        .peso-input { flex: 2; }
+        .peso-input label { font-size: 0.7rem; font-weight: 600; color: #6c5b4b; display: block; margin-bottom: 4px; }
+        .peso-input input { width: 100%; padding: 10px 12px; border: 1px solid #e2cfb3; border-radius: 60px; font-size: 0.9rem; background: #fffdf9; }
+        .peso-input input:focus { outline: none; border-color: #b45f2b; }
+        .esempi-peso { font-size: 0.6rem; color: #8b7a68; margin-top: 6px; }
+        button.aggiungi { background: #2c5e3a; color: white; border: none; padding: 10px 20px; border-radius: 60px; font-weight: 600; cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+        button.aggiungi:hover { background: #1e4529; }
+        .carrello-sidebar { background: #fffaf3; border-radius: 32px; padding: 28px; margin: 40px 0; border: 1px solid #ede0ce; }
+        .carrello-item { border-bottom: 1px solid #e9dacb; padding: 14px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .totale { font-size: 1.7rem; font-weight: 800; margin: 24px 0 16px; text-align: right; color: #2c5e3a; }
+        .btn-ordina { background: #004d73; color: white; border: none; padding: 12px 28px; border-radius: 60px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-right: 12px; }
+        .btn-ordina:hover { background: #003a57; }
+        .btn-telegram { background: #27a065; }
+        .btn-telegram:hover { background: #1d7a4c; }
+        .svuota-carrello { background: none; border: none; color: #b45f2b; text-decoration: underline; cursor: pointer; font-size: 0.85rem; margin-top: 12px; }
+        .contatti-section { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 60px 0; background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 15px 30px -12px rgba(0,0,0,0.08); }
+        .contatti-info { padding: 36px; background: #fffaf3; }
+        .contatti-info h3 { font-size: 2rem; margin-bottom: 28px; color: #1e3b2c; }
+        .contatto-item { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; background: white; padding: 14px 20px; border-radius: 60px; }
+        .contatto-icon { font-size: 2rem; }
+        .contatto-details strong { display: block; font-size: 0.7rem; text-transform: uppercase; color: #8b7a68; }
+        .contatto-details a, .contatto-details span { font-size: 1rem; font-weight: 600; color: #2c2418; text-decoration: none; }
+        .consegne { background: #eef3e9; border-radius: 24px; padding: 20px; text-align: center; margin-top: 20px; }
+        .map-container iframe { width: 100%; height: 100%; min-height: 420px; }
+        footer { text-align: center; padding: 40px 0; color: #6c5b4b; border-top: 1px solid #e9dacb; margin-top: 40px; font-size: 0.85rem; }
+        .alert-message { background: #fff3cd; padding: 12px 20px; border-radius: 60px; margin-bottom: 20px; display: none; }
+        @media (max-width: 780px) {
+            .hero h1 { font-size: 2.2rem; }
             .contatti-section { grid-template-columns: 1fr; }
-            .prodotti-grid { gap: 20px; }
             .btn-ordina { margin-bottom: 10px; display: inline-block; }
-            .btn-telegram { margin-right: 0; }
-            .ordine-row { flex-direction: column; }
-            button.aggiungi { width: 100%; }
         }
     </style>
 </head>
@@ -372,13 +83,13 @@
 
     <div class="carrello-sidebar">
         <h3>📦 Riepilogo ordine</h3>
-        <p style="font-size: 0.75rem; margin-bottom: 10px;">⚖️ Pesi da 0.050 kg (50g) a 5 kg. Esempi: 0.050 = 50g, 0.150 = 150g, 0.550 = 550g</p>
+        <p style="font-size: 0.8rem;">⚖️ Pesi da 0.050 kg (50g) a 5 kg. Esempi: 0.050 = 50g, 0.150 = 150g, 0.550 = 550g, 1.2 = 1.2kg</p>
         <div id="listaCarrello"></div>
         <div class="totale">💰 Totale: € <span id="totaleCarrello">0.00</span></div>
         <button class="btn-ordina" id="btnEmail">✉️ Invia ordine via email</button>
         <button class="btn-ordina btn-telegram" id="btnTelegram">📱 Ordina su Telegram</button>
         <div><button class="svuota-carrello" id="svuotaCarrello">🗑️ Svuota carrello</button></div>
-        <p style="font-size: 0.65rem; color: #b45f2b; margin-top: 12px;">🎂 Ordini anche per compleanni e feste - monodose e formato famiglia</p>
+        <p style="font-size: 0.7rem; color: #b45f2b; margin-top: 16px;">🎂 Ordini anche per compleanni e feste - monodose e formato famiglia</p>
     </div>
 
     <div id="catalogo"></div>
@@ -388,28 +99,19 @@
             <h3>📞 Contattaci</h3>
             <div class="contatto-item">
                 <div class="contatto-icon">📧</div>
-                <div class="contatto-details">
-                    <strong>Email</strong>
-                    <a href="mailto:ops.channel@proton.me">ops.channel@proton.me</a>
-                </div>
+                <div class="contatto-details"><strong>Email</strong><a href="mailto:ops.channel@proton.me">ops.channel@proton.me</a></div>
             </div>
             <div class="contatto-item">
                 <div class="contatto-icon">📱</div>
-                <div class="contatto-details">
-                    <strong>Telefono / WhatsApp</strong>
-                    <a href="tel:+393316219512">+39 331 621 9512</a>
-                </div>
+                <div class="contatto-details"><strong>Telefono / WhatsApp</strong><a href="tel:+393316219512">+39 331 621 9512</a></div>
             </div>
             <div class="contatto-item">
                 <div class="contatto-icon">📍</div>
-                <div class="contatto-details">
-                    <strong>Indirizzo</strong>
-                    <span>Trattoria Camporeggi - Casa della Nella, Livorno</span>
-                </div>
+                <div class="contatto-details"><strong>Indirizzo</strong><span>Trattoria Camporeggi - Casa della Nella, Livorno</span></div>
             </div>
             <div class="consegne">
                 <p>🚚 Consegne effettuate il <strong>Lunedì, Mercoledì e Venerdì</strong></p>
-                <p style="font-size:0.7rem; margin-top:5px;">Ordina entro le 18:00 del giorno precedente</p>
+                <p style="font-size:0.8rem;">Ordina entro le 18:00 del giorno precedente</p>
             </div>
         </div>
         <div class="map-container">
@@ -422,274 +124,211 @@
         Prodotti sottovuoto e freschi | Spedizioni e ritiro su ordinazione<br>
         📧 <a href="mailto:ops.channel@proton.me">ops.channel@proton.me</a> | 
         📱 <a href="tel:+393316219512">+39 331 621 9512</a> |
-        📱 <a href="#" id="telegramFooterLink">@MarketHubShop_bot</a>
+        📱 <a href="#" id="telegramFooterLink">@MarketHubShop_bot</a><br>
+        📍 Trattoria Camporeggi - Casa della Nella, Livorno
     </footer>
 </div>
 
 <script>
-// ============================================================
-// JAVASCRIPT IDENTICO AL TEST CHE FUNZIONA
-// ============================================================
+    // ---------- CATALOGO CON ID UNIVOCO ----------
+    const prodotti = [
+        { id: 1, nome: "Tagliolini freschi", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
+        { id: 2, nome: "Pappardelle fresche", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
+        { id: 3, nome: "Ragù di manzo", tipo: "variabile", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", emoji: "🍲" },
+        { id: 4, nome: "Cinghiale in umido (pezzi grandi)", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🐗" },
+        { id: 5, nome: "Cervo in umido", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🦌" },
+        { id: 6, nome: "Peposo", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
+        { id: 7, nome: "Arista", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🐖" },
+        { id: 8, nome: "Roast beef", tipo: "variabile", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
+        { id: 9, nome: "Pinse 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", emoji: "🍕" },
+        { id: 10, nome: "Pinse 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", emoji: "🍕" },
+        { id: 11, nome: "Schiacciata al carbone 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", emoji: "🖤" },
+        { id: 12, nome: "Schiacciata al carbone 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", emoji: "🖤" },
+        { id: 13, nome: "Pappa al pomodoro", tipo: "variabile", prezzoKg: 8, categoria: "🥣 Zuppe e primi", emoji: "🍅" },
+        { id: 14, nome: "Farro cotto con pomodorini", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🌾" },
+        { id: 15, nome: "Lasagne (in contenitore)", tipo: "variabile", prezzoKg: 13, categoria: "🥣 Zuppe e primi", emoji: "🍽️" },
+        { id: 16, nome: "Melanzane alla parmigiana", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🍆" },
+        { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
+        { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
+        { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
+        { id: 20, nome: "Cheesecake cotta/cruda", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
+        { id: 21, nome: "Torta del nonno", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
+        { id: 22, nome: "Torta della nonna", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" }
+    ];
 
-const prodottiLista = [
-    { nome: "Tagliolini freschi", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
-    { nome: "Pappardelle fresche", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
-    { nome: "Ragù di manzo", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", emoji: "🍲" },
-    { nome: "Cinghiale in umido", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🐗" },
-    { nome: "Cervo in umido", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🦌" },
-    { nome: "Peposo", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
-    { nome: "Arista", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🐖" },
-    { nome: "Roast beef", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
-    { nome: "Pinse 200g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🍕", fisso: true, pesoFisso: 0.2, prezzoFisso: 2 },
-    { nome: "Pinse 400g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🍕", fisso: true, pesoFisso: 0.4, prezzoFisso: 3 },
-    { nome: "Schiacciata carbone 200g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.2, prezzoFisso: 2 },
-    { nome: "Schiacciata carbone 400g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.4, prezzoFisso: 3 },
-    { nome: "Pappa al pomodoro", prezzoKg: 8, categoria: "🥣 Zuppe e primi", emoji: "🍅" },
-    { nome: "Farro cotto", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🌾" },
-    { nome: "Lasagne", prezzoKg: 13, categoria: "🥣 Zuppe e primi", emoji: "🍽️" },
-    { nome: "Melanzane parmigiana", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🍆" },
-    { nome: "Crostata albicocca", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-    { nome: "Crostata frutti di bosco", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
-    { nome: "Cheesecake", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-    { nome: "Torta del nonno", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-    { nome: "Torta della nonna", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" }
-];
+    let carrello = [];
 
-let carrelloItems = [];
+    function showMessage(msg, isError = true) {
+        const alertDiv = document.getElementById("alertMessage");
+        alertDiv.textContent = msg;
+        alertDiv.style.display = "block";
+        alertDiv.style.background = isError ? "#fff3cd" : "#d4edda";
+        alertDiv.style.color = isError ? "#856404" : "#155724";
+        setTimeout(() => alertDiv.style.display = "none", 3000);
+    }
 
-function showMessage(msg, isSuccess = false) {
-    const alertDiv = document.getElementById("alertMessage");
-    alertDiv.textContent = msg;
-    alertDiv.style.display = "block";
-    alertDiv.style.background = isSuccess ? "#d4edda" : "#fff3cd";
-    alertDiv.style.color = isSuccess ? "#155724" : "#856404";
-    setTimeout(() => alertDiv.style.display = "none", 3000);
-}
-
-function aggiungiAlCarrello(nome, prezzoKg, pesoKg, prezzoFisso = null, pesoFisso = null) {
-    let prezzoTotale;
-    let pesoFinale;
-    
-    if (prezzoFisso !== null && pesoFisso !== null) {
-        prezzoTotale = prezzoFisso;
-        pesoFinale = pesoFisso;
-    } else {
+    // Aggiungi prodotto variabile: riceve l'ID, recupera i dati dall'array
+    function aggiungiVariabileById(idProdotto, pesoKg) {
+        const prodotto = prodotti.find(p => p.id === idProdotto);
+        if (!prodotto) return;
         let peso = parseFloat(pesoKg);
-        if (isNaN(peso) || peso < 0.05) {
-            showMessage("⚠️ Peso minimo 0.050 kg (50 grammi)");
-            return;
-        }
-        if (peso > 5) {
-            showMessage("⚠️ Peso massimo 5 kg");
-            return;
-        }
-        prezzoTotale = peso * prezzoKg;
-        prezzoTotale = Math.round(prezzoTotale * 100) / 100;
-        pesoFinale = peso;
-    }
-    
-    carrelloItems.push({
-        nome: nome,
-        peso: pesoFinale,
-        prezzoTotale: prezzoTotale
-    });
-    
-    aggiornaCarrello();
-    
-    let msgPeso = pesoFinale < 1 ? `${(pesoFinale*1000).toFixed(0)}g` : `${pesoFinale.toFixed(2)}kg`;
-    showMessage(`✅ ${nome} - ${msgPeso} = €${prezzoTotale.toFixed(2)}`, true);
-}
-
-function mostraProdotti() {
-    const container = document.getElementById('catalogo');
-    const categorie = {};
-    for (let p of prodottiLista) {
-        if (!categorie[p.categoria]) categorie[p.categoria] = [];
-        categorie[p.categoria].push(p);
-    }
-    
-    let html = '';
-    for (let cat in categorie) {
-        html += `<h2 class="categoria">${cat}</h2><div class="prodotti-grid">`;
-        for (let prod of categorie[cat]) {
-            if (prod.fisso) {
-                html += `
-                    <div class="card-prodotto">
-                        <div class="img-placeholder">${prod.emoji}</div>
-                        <div class="info-prodotto">
-                            <div class="nome-prodotto">${prod.nome}</div>
-                            <div class="prezzo">💰 ${prod.prezzoFisso}€ (${prod.pesoFisso*1000}g)</div>
-                            <div class="ordine-row">
-                                <button class="aggiungi-fisso" data-nome="${prod.nome}" data-prezzo="${prod.prezzoFisso}" data-peso="${prod.pesoFisso}">➕ Aggiungi</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                const idPeso = `peso_${prod.nome.replace(/\s/g, '').replace(/[()]/g, '')}`;
-                html += `
-                    <div class="card-prodotto">
-                        <div class="img-placeholder">${prod.emoji}</div>
-                        <div class="info-prodotto">
-                            <div class="nome-prodotto">${prod.nome}</div>
-                            <div class="prezzo">💰 ${prod.prezzoKg}€/kg</div>
-                            <div class="ordine-row">
-                                <div class="peso-input">
-                                    <label>⚖️ Peso (kg):</label>
-                                    <input type="number" step="0.01" min="0.05" value="0.5" id="${idPeso}">
-                                    <div class="esempi-peso">es: 0.05 (50g) | 0.25 (250g) | 0.55 | 1.2</div>
-                                </div>
-                                <button class="aggiungi-variabile" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}" data-inputid="${idPeso}">➕ Aggiungi</button>
-                            </div>
-                            <div class="prezzo-anteprima" id="preview-${idPeso}">💰 €0.00</div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        html += `</div>`;
-    }
-    container.innerHTML = html;
-    
-    // Eventi fissi
-    document.querySelectorAll(".aggiungi-fisso").forEach(btn => {
-        btn.addEventListener("click", () => {
-            aggiungiAlCarrello(btn.dataset.nome, 0, 0, parseFloat(btn.dataset.prezzo), parseFloat(btn.dataset.peso));
+        if (isNaN(peso) || peso < 0.05) { showMessage("⚠️ Minimo 0.050 kg (50g)"); return; }
+        if (peso > 5) { showMessage("⚠️ Massimo 5 kg"); return; }
+        const totale = Math.round(peso * prodotto.prezzoKg * 100) / 100;
+        carrello.push({
+            id: Date.now(),
+            nome: prodotto.nome,
+            pesoKg: peso,
+            prezzoTotale: totale
         });
-    });
-    
-    // Eventi variabili con anteprima
-    document.querySelectorAll(".aggiungi-variabile").forEach(btn => {
-        const nome = btn.dataset.nome;
-        const prezzoKg = parseFloat(btn.dataset.prezzoKg);
-        const inputId = btn.dataset.inputid;
-        const inputElem = document.getElementById(inputId);
-        const previewSpan = document.getElementById(`preview-${inputId}`);
-        
-        const updatePreview = () => {
-            let val = parseFloat(inputElem.value);
-            if (isNaN(val)) val = 0;
-            let anteprima = val * prezzoKg;
-            previewSpan.innerHTML = `💰 €${anteprima.toFixed(2)}`;
-        };
-        inputElem.addEventListener('input', updatePreview);
-        updatePreview();
-        
-        btn.addEventListener("click", () => {
-            let pesoKg = parseFloat(inputElem.value);
-            if (isNaN(pesoKg)) pesoKg = 0.5;
-            aggiungiAlCarrello(nome, prezzoKg, pesoKg, null, null);
-        });
-    });
-}
-
-function aggiornaCarrello() {
-    const listaDiv = document.getElementById("listaCarrello");
-    let totale = 0;
-    let htmlItems = "";
-    
-    if (carrelloItems.length === 0) {
-        htmlItems = "<p style='text-align:center; color:#6c5b4b;'>🛒 Carrello vuoto</p>";
-    } else {
-        for (let i = 0; i < carrelloItems.length; i++) {
-            const item = carrelloItems[i];
-            totale += item.prezzoTotale;
-            const pesoMostra = item.peso < 1 ? `${(item.peso * 1000).toFixed(0)} grammi` : `${item.peso.toFixed(2)} kg`;
-            htmlItems += `
-                <div class="carrello-item">
-                    <div><strong>${item.nome}</strong><br><span style="font-size:0.75rem;">⚖️ ${pesoMostra} → € ${item.prezzoTotale.toFixed(2)}</span></div>
-                    <button style="background:#f0e0d0; border:none; padding:5px 10px; border-radius:30px; cursor:pointer;" onclick="rimuoviItem(${i})">🗑️</button>
-                </div>
-            `;
-        }
-    }
-    listaDiv.innerHTML = htmlItems;
-    document.getElementById("totaleCarrello").innerText = totale.toFixed(2);
-    localStorage.setItem("camporeggiCarrello", JSON.stringify(carrelloItems));
-}
-
-window.rimuoviItem = function(idx) {
-    carrelloItems.splice(idx, 1);
-    aggiornaCarrello();
-    showMessage("❌ Prodotto rimosso");
-};
-
-document.getElementById("svuotaCarrello").addEventListener("click", () => {
-    if (carrelloItems.length > 0) {
-        carrelloItems = [];
         aggiornaCarrello();
-        showMessage("🗑️ Carrello svuotato", true);
+        showMessage(`✅ ${prodotto.nome} - ${(peso*1000).toFixed(0)}g → €${totale.toFixed(2)}`, false);
     }
-});
 
-function generaTestoOrdine() {
-    if (carrelloItems.length === 0) {
-        showMessage("⚠️ Carrello vuoto");
-        return null;
+    function aggiungiFissoById(idProdotto) {
+        const prodotto = prodotti.find(p => p.id === idProdotto);
+        if (!prodotto || prodotto.tipo !== "fisso") return;
+        carrello.push({
+            id: Date.now(),
+            nome: prodotto.nome,
+            pesoKg: prodotto.pesoKg,
+            prezzoTotale: prodotto.prezzo
+        });
+        aggiornaCarrello();
+        showMessage(`✅ ${prodotto.nome} (${prodotto.pesoKg*1000}g) → €${prodotto.prezzo.toFixed(2)}`, false);
     }
-    let testo = "🛒 ORDINE CAMPOREGGI VALLE BENEDETTA\n";
-    testo += `📅 Data: ${new Date().toLocaleString('it-IT')}\n`;
-    testo += "=".repeat(50) + "\n\n";
-    let totale = 0;
-    
-    for (let i = 0; i < carrelloItems.length; i++) {
-        const item = carrelloItems[i];
-        const pesoMostra = item.peso < 1 ? `${(item.peso * 1000).toFixed(0)} grammi` : `${item.peso.toFixed(2)} kg`;
-        testo += `${i+1}. ${item.nome}\n`;
-        testo += `   📦 Peso: ${pesoMostra}\n`;
-        testo += `   💶 Prezzo: € ${item.prezzoTotale.toFixed(2)}\n\n`;
-        totale += item.prezzoTotale;
-    }
-    
-    testo += "=".repeat(50) + "\n";
-    testo += `💰 TOTALE: € ${totale.toFixed(2)}\n\n`;
-    testo += "─".repeat(50) + "\n";
-    testo += "📦 DATI CONSEGNA:\n";
-    testo += "   Nome: _______________\n";
-    testo += "   Indirizzo: _______________\n";
-    testo += "   Telefono: _______________\n\n";
-    testo += "🎂 NOTE: _______________\n\n";
-    testo += "🚚 CONSEGNE: Lunedì, Mercoledì, Venerdì\n";
-    testo += "🙏 Grazie!\n";
-    testo += "📞 +39 331 621 9512\n";
-    testo += "📧 ops.channel@proton.me";
-    return testo;
-}
 
-document.getElementById("btnEmail").addEventListener("click", () => {
-    const ordine = generaTestoOrdine();
-    if (ordine) {
-        window.location.href = `mailto:ops.channel@proton.me?subject=Ordine%20Camporeggi&body=${encodeURIComponent(ordine)}`;
-    }
-});
-
-document.getElementById("btnTelegram").addEventListener("click", () => {
-    const ordine = generaTestoOrdine();
-    if (ordine) {
-        navigator.clipboard.writeText(ordine);
-        window.open('https://t.me/MarketHubShop_bot', '_blank');
-        showMessage("✅ Ordine copiato! Incollalo nella chat", true);
-    }
-});
-
-document.getElementById("telegramFooterLink")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.open('https://t.me/MarketHubShop_bot', '_blank');
-});
-
-const saved = localStorage.getItem("camporeggiCarrello");
-if (saved) {
-    try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-            carrelloItems = parsed;
-            aggiornaCarrello();
-            showMessage("🔄 Carrello recuperato", true);
+    function renderCatalogo() {
+        const container = document.getElementById("catalogo");
+        const categorie = [...new Map(prodotti.map(p => [p.categoria, p.categoria])).keys()];
+        let html = "";
+        for (let cat of categorie) {
+            html += `<h2 class="categoria">${cat}</h2><div class="prodotti-grid">`;
+            const prodottiCat = prodotti.filter(p => p.categoria === cat);
+            for (let prod of prodottiCat) {
+                if (prod.tipo === "fisso") {
+                    html += `
+                        <div class="card-prodotto">
+                            <div class="img-placeholder">${prod.emoji}</div>
+                            <div class="info-prodotto">
+                                <div class="nome-prodotto">${prod.nome}</div>
+                                <div class="prezzo">💰 ${prod.prezzo}€ (${prod.pesoKg*1000}g)</div>
+                                <div class="ordine-row">
+                                    <button class="aggiungi-fisso" data-id="${prod.id}">➕ Aggiungi al carrello</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const inputId = `peso-${prod.id}`;
+                    html += `
+                        <div class="card-prodotto">
+                            <div class="img-placeholder">${prod.emoji}</div>
+                            <div class="info-prodotto">
+                                <div class="nome-prodotto">${prod.nome}</div>
+                                <div class="prezzo">💰 ${prod.prezzoKg}€/kg</div>
+                                <div class="ordine-row">
+                                    <div class="peso-input">
+                                        <label>⚖️ Peso (kg):</label>
+                                        <input type="number" step="0.01" min="0.05" value="0.5" id="${inputId}">
+                                        <div class="esempi-peso">es. 0.05 (50g) | 0.25 (250g) | 0.55 (550g) | 1.2 (1.2kg)</div>
+                                    </div>
+                                    <button class="aggiungi-variabile" data-id="${prod.id}" data-inputid="${inputId}">➕ Aggiungi</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            html += `</div>`;
         }
-    } catch(e) {}
-}
+        container.innerHTML = html;
 
-mostraProdotti();
+        // Eventi fissi
+        document.querySelectorAll(".aggiungi-fisso").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = parseInt(btn.dataset.id);
+                aggiungiFissoById(id);
+            });
+        });
+
+        // Eventi variabili
+        document.querySelectorAll(".aggiungi-variabile").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = parseInt(btn.dataset.id);
+                const inputElem = document.getElementById(btn.dataset.inputid);
+                let peso = inputElem ? inputElem.value : "0.5";
+                aggiungiVariabileById(id, peso);
+            });
+        });
+    }
+
+    function aggiornaCarrello() {
+        const listaDiv = document.getElementById("listaCarrello");
+        let totale = 0;
+        let htmlItems = "";
+        if (carrello.length === 0) {
+            htmlItems = "<p style='text-align:center; color:#6c5b4b;'>🛒 Carrello vuoto</p>";
+        } else {
+            carrello.forEach((item, idx) => {
+                totale += item.prezzoTotale;
+                let pesoMostra = item.pesoKg < 1 ? `${(item.pesoKg * 1000).toFixed(0)} grammi` : `${item.pesoKg.toFixed(2)} kg`;
+                htmlItems += `
+                    <div class="carrello-item">
+                        <div><strong>${item.nome}</strong><br>⚖️ ${pesoMostra} → € ${item.prezzoTotale.toFixed(2)}</div>
+                        <button style="background:#f0e0d0; border:none; padding:6px 12px; border-radius:60px; cursor:pointer;" onclick="rimuoviItem(${idx})">🗑️ Rimuovi</button>
+                    </div>
+                `;
+            });
+        }
+        listaDiv.innerHTML = htmlItems;
+        document.getElementById("totaleCarrello").innerText = totale.toFixed(2);
+        localStorage.setItem("camporeggiCarrello", JSON.stringify(carrello));
+    }
+
+    window.rimuoviItem = function(idx) {
+        carrello.splice(idx, 1);
+        aggiornaCarrello();
+        showMessage("❌ Rimosso", true);
+    };
+
+    document.getElementById("svuotaCarrello").addEventListener("click", () => {
+        if (carrello.length) { carrello = []; aggiornaCarrello(); showMessage("🗑️ Carrello svuotato", false); }
+    });
+
+    function generaTestoOrdine() {
+        if (carrello.length === 0) { showMessage("⚠️ Carrello vuoto"); return null; }
+        let testo = "🛒 ORDINE CAMPOREGGI VALLE BENEDETTA\n";
+        testo += `📅 Data: ${new Date().toLocaleString('it-IT')}\n${"=".repeat(50)}\n\n`;
+        let totale = 0;
+        carrello.forEach((item, i) => {
+            let pesoMostra = item.pesoKg < 1 ? `${(item.pesoKg*1000).toFixed(0)} grammi` : `${item.pesoKg.toFixed(2)} kg`;
+            testo += `${i+1}. ${item.nome}\n   📦 Peso: ${pesoMostra}\n   💶 Prezzo: € ${item.prezzoTotale.toFixed(2)}\n\n`;
+            totale += item.prezzoTotale;
+        });
+        testo += `${"=".repeat(50)}\n💰 TOTALE: € ${totale.toFixed(2)}\n\n`;
+        testo += "📦 DATI CONSEGNA:\n   Nome: _______________\n   Indirizzo: _______________\n   Telefono: _______________\n\n";
+        testo += "🎂 NOTE (compleanni, monodose):\n   ________________________\n\n🚚 Consegne: Lunedì, Mercoledì, Venerdì\n🙏 Grazie!\n📞 +39 331 621 9512\n📧 ops.channel@proton.me";
+        return testo;
+    }
+
+    document.getElementById("btnEmail").addEventListener("click", () => {
+        const ord = generaTestoOrdine();
+        if (ord) window.location.href = `mailto:ops.channel@proton.me?subject=Ordine%20Camporeggi&body=${encodeURIComponent(ord)}`;
+    });
+    document.getElementById("btnTelegram").addEventListener("click", () => {
+        const ord = generaTestoOrdine();
+        if (ord) { navigator.clipboard.writeText(ord); window.open("https://t.me/MarketHubShop_bot", "_blank"); showMessage("✅ Ordine copiato, incollalo su Telegram", false); }
+    });
+    document.getElementById("telegramFooterLink")?.addEventListener("click", (e) => { e.preventDefault(); window.open("https://t.me/MarketHubShop_bot", "_blank"); });
+
+    function caricaCarrelloSalvato() {
+        const salvato = localStorage.getItem("camporeggiCarrello");
+        if (salvato) try { const v = JSON.parse(salvato); if (Array.isArray(v) && v.length) { carrello = v; aggiornaCarrello(); showMessage("🔄 Carrello recuperato", false); } } catch(e) {}
+    }
+
+    renderCatalogo();
+    caricaCarrelloSalvato();
 </script>
 </body>
 </html>
