@@ -146,30 +146,43 @@
 </div>
 
 <script>
-    // DATABASE PRODOTTI - VERIFICA CHE I PERCORSI DELLE IMMAGINI SIANO CORRETTI
+    // ============================================================
+    // DATABASE PRODOTTI CON ESTENSIONE .jpeg
+    // ============================================================
     const prodotti = [
-        { id: 1, nome: "Tagliolini freschi", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", img: "img/pasta/tagliolini.jpg", emoji: "🍝" },
-        { id: 2, nome: "Pappardelle fresche", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", img: "img/pasta/pappardelle.jpg", emoji: "🍝" },
-        { id: 3, nome: "Ragù di manzo", tipo: "variabile", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", img: "img/sughi/ragu.jpg", emoji: "🍲" },
-        { id: 4, nome: "Cinghiale in umido (pezzi grandi)", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", img: "img/sughi/cinghiale.jpg", emoji: "🐗" },
-        { id: 5, nome: "Cervo in umido", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", img: "img/sughi/cervo.jpg", emoji: "🦌" },
-        { id: 6, nome: "Peposo", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", img: "img/carni/peposo.jpg", emoji: "🥩" },
-        { id: 7, nome: "Arista", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", img: "img/carni/arista.jpg", emoji: "🐖" },
-        { id: 8, nome: "Roast beef", tipo: "variabile", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", img: "img/carni/roastbeef.jpg", emoji: "🥩" },
-        { id: 9, nome: "Pinse 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", img: "img/forno/pinse.jpg", emoji: "🍕" },
-        { id: 10, nome: "Pinse 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", img: "img/forno/pinse.jpg", emoji: "🍕" },
-        { id: 11, nome: "Schiacciata al carbone 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", img: "img/forno/schiacciata.jpg", emoji: "🖤" },
-        { id: 12, nome: "Schiacciata al carbone 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", img: "img/forno/schiacciata.jpg", emoji: "🖤" },
-        { id: 13, nome: "Pappa al pomodoro", tipo: "variabile", prezzoKg: 8, categoria: "🥣 Zuppe e primi", img: "img/primi/pappa.jpg", emoji: "🍅" },
-        { id: 14, nome: "Farro cotto con pomodorini", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", img: "img/primi/farro.jpg", emoji: "🌾" },
-        { id: 15, nome: "Lasagne (in contenitore)", tipo: "variabile", prezzoKg: 13, categoria: "🥣 Zuppe e primi", img: "img/primi/lasagne.jpg", emoji: "🍽️" },
-        { id: 16, nome: "Melanzane alla parmigiana", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", img: "img/primi/melanzane.jpg", emoji: "🍆" },
-        { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/crostata.jpg", emoji: "🍰" },
-        { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/crostata.jpg", emoji: "🍓" },
-        { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/crostata.jpg", emoji: "🍓" },
-        { id: 20, nome: "Cheesecake cotta/cruda", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/cheesecake.jpg", emoji: "🍰" },
-        { id: 21, nome: "Torta del nonno", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/torranonno.jpg", emoji: "🍰" },
-        { id: 22, nome: "Torta della nonna", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/torranonna.jpg", emoji: "🍰" }
+        // PASTA FRESCA
+        { id: 1, nome: "Tagliolini freschi", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", img: "img/pasta/tagliolini.jpeg", emoji: "🍝" },
+        { id: 2, nome: "Pappardelle fresche", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", img: "img/pasta/pappardelle.jpeg", emoji: "🍝" },
+        
+        // SUGHI
+        { id: 3, nome: "Ragù di manzo", tipo: "variabile", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", img: "img/sughi/ragu.jpeg", emoji: "🍲" },
+        { id: 4, nome: "Cinghiale in umido (pezzi grandi)", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", img: "img/sughi/cinghiale.jpeg", emoji: "🐗" },
+        { id: 5, nome: "Cervo in umido", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", img: "img/sughi/cervo.jpeg", emoji: "🦌" },
+        
+        // CARNI
+        { id: 6, nome: "Peposo", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", img: "img/carni/peposo.jpeg", emoji: "🥩" },
+        { id: 7, nome: "Arista", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", img: "img/carni/arista.jpeg", emoji: "🐖" },
+        { id: 8, nome: "Roast beef", tipo: "variabile", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", img: "img/carni/roastbeef.jpeg", emoji: "🥩" },
+        
+        // FORNO (peso fisso)
+        { id: 9, nome: "Pinse 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", img: "img/forno/pinse.jpeg", emoji: "🍕" },
+        { id: 10, nome: "Pinse 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", img: "img/forno/pinse.jpeg", emoji: "🍕" },
+        { id: 11, nome: "Schiacciata al carbone 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", img: "img/forno/schiacciata.jpeg", emoji: "🖤" },
+        { id: 12, nome: "Schiacciata al carbone 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", img: "img/forno/schiacciata.jpeg", emoji: "🖤" },
+        
+        // ZUPPE E PRIMI
+        { id: 13, nome: "Pappa al pomodoro", tipo: "variabile", prezzoKg: 8, categoria: "🥣 Zuppe e primi", img: "img/primi/pappa.jpeg", emoji: "🍅" },
+        { id: 14, nome: "Farro cotto con pomodorini", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", img: "img/primi/farro.jpeg", emoji: "🌾" },
+        { id: 15, nome: "Lasagne (in contenitore)", tipo: "variabile", prezzoKg: 13, categoria: "🥣 Zuppe e primi", img: "img/primi/lasagne.jpeg", emoji: "🍽️" },
+        { id: 16, nome: "Melanzane alla parmigiana", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", img: "img/primi/melanzane.jpeg", emoji: "🍆" },
+        
+        // DOLCI
+        { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/crostata.jpeg", emoji: "🍰" },
+        { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/crostata.jpeg", emoji: "🍓" },
+        { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/crostata.jpeg", emoji: "🍓" },
+        { id: 20, nome: "Cheesecake cotta/cruda", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/cheesecake.jpeg", emoji: "🍰" },
+        { id: 21, nome: "Torta del nonno", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/torranonno.jpeg", emoji: "🍰" },
+        { id: 22, nome: "Torta della nonna", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: "img/dolci/torranonna.jpeg", emoji: "🍰" }
     ];
 
     let carrello = [];
