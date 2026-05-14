@@ -179,13 +179,6 @@
             color: #8b7a68;
             margin-top: 6px;
         }
-        .anteprima-prezzo {
-            font-size: 0.75rem;
-            color: #2c5e3a;
-            font-weight: 600;
-            margin-top: 6px;
-            text-align: right;
-        }
 
         button.aggiungi {
             background: #2c5e3a;
@@ -427,34 +420,33 @@
 
 <script>
     // ============================================================
-    // DATABASE PRODOTTI (PREZZI COME NUMERI - NESSUN NaN)
+    // DATABASE PRODOTTI (IDENTICO AL TEST CHE FUNZIONA)
     // ============================================================
-    const prodotti = [
+    const prodottiLista = [
         { nome: "Tagliolini freschi", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
         { nome: "Pappardelle fresche", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
         { nome: "Ragù di manzo", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", emoji: "🍲" },
-        { nome: "Cinghiale in umido (pezzi grandi)", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🐗" },
+        { nome: "Cinghiale in umido", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🐗" },
         { nome: "Cervo in umido", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🦌" },
         { nome: "Peposo", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
         { nome: "Arista", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🐖" },
         { nome: "Roast beef", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
         { nome: "Pinse 200g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🍕", fisso: true, pesoFisso: 0.2, prezzoFisso: 2 },
         { nome: "Pinse 400g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🍕", fisso: true, pesoFisso: 0.4, prezzoFisso: 3 },
-        { nome: "Schiacciata al carbone 200g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.2, prezzoFisso: 2 },
-        { nome: "Schiacciata al carbone 400g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.4, prezzoFisso: 3 },
+        { nome: "Schiacciata carbone 200g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.2, prezzoFisso: 2 },
+        { nome: "Schiacciata carbone 400g", prezzoKg: 10, categoria: "🔥 Forno", emoji: "🖤", fisso: true, pesoFisso: 0.4, prezzoFisso: 3 },
         { nome: "Pappa al pomodoro", prezzoKg: 8, categoria: "🥣 Zuppe e primi", emoji: "🍅" },
-        { nome: "Farro cotto con pomodorini", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🌾" },
-        { nome: "Lasagne (in contenitore)", prezzoKg: 13, categoria: "🥣 Zuppe e primi", emoji: "🍽️" },
-        { nome: "Melanzane alla parmigiana", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🍆" },
+        { nome: "Farro cotto", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🌾" },
+        { nome: "Lasagne", prezzoKg: 13, categoria: "🥣 Zuppe e primi", emoji: "🍽️" },
+        { nome: "Melanzane parmigiana", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🍆" },
         { nome: "Crostata albicocca", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
         { nome: "Crostata frutti di bosco", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
-        { nome: "Crostata fragole", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
-        { nome: "Cheesecake cotta/cruda", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
+        { nome: "Cheesecake", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
         { nome: "Torta del nonno", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
         { nome: "Torta della nonna", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" }
     ];
 
-    let carrello = [];
+    let carrelloItems = [];
 
     function showMessage(msg, isSuccess = false) {
         const alertDiv = document.getElementById("alertMessage");
@@ -465,7 +457,7 @@
         setTimeout(() => alertDiv.style.display = "none", 3000);
     }
 
-    // Funzione per aggiungere al carrello (IDENTICA A QUELLA DEL TEST)
+    // FUNZIONE AGGIUNGI (IDENTICA AL TEST)
     function aggiungiAlCarrello(nome, prezzoKg, pesoKg, prezzoFisso = null, pesoFisso = null) {
         let prezzoTotale;
         let pesoFinale;
@@ -488,9 +480,9 @@
             pesoFinale = peso;
         }
         
-        carrello.push({
+        carrelloItems.push({
             nome: nome,
-            pesoKg: pesoFinale,
+            peso: pesoFinale,
             prezzoTotale: prezzoTotale
         });
         
@@ -500,17 +492,22 @@
         showMessage(`✅ ${nome} - ${msgPeso} = €${prezzoTotale.toFixed(2)}`, true);
     }
 
-    // Render catalogo
-    function renderCatalogo() {
-        const container = document.getElementById("catalogo");
-        const categorie = [...new Map(prodotti.map(p => [p.categoria, p.categoria])).keys()];
-        let html = "";
+    // MOSTRA PRODOTTI (VERSIONE CON DESIGN)
+    function mostraProdotti() {
+        const container = document.getElementById('catalogo');
         
-        for (let cat of categorie) {
+        // Raggruppa per categoria
+        const categorie = {};
+        for (let p of prodottiLista) {
+            if (!categorie[p.categoria]) categorie[p.categoria] = [];
+            categorie[p.categoria].push(p);
+        }
+        
+        let html = '';
+        for (let cat in categorie) {
             html += `<h2 class="categoria">${cat}</h2><div class="prodotti-grid">`;
-            const prodottiCat = prodotti.filter(p => p.categoria === cat);
             
-            for (let prod of prodottiCat) {
+            for (let prod of categorie[cat]) {
                 if (prod.fisso) {
                     html += `
                         <div class="card-prodotto">
@@ -519,13 +516,13 @@
                                 <div class="nome-prodotto">${prod.nome}</div>
                                 <div class="prezzo">💰 ${prod.prezzoFisso}€ (${prod.pesoFisso*1000}g)</div>
                                 <div class="ordine-row">
-                                    <button class="aggiungi-fisso" data-nome="${prod.nome}" data-prezzo="${prod.prezzoFisso}" data-peso="${prod.pesoFisso}">➕ Aggiungi al carrello</button>
+                                    <button class="aggiungi-fisso" data-nome="${prod.nome}" data-prezzo="${prod.prezzoFisso}" data-peso="${prod.pesoFisso}">➕ Aggiungi</button>
                                 </div>
                             </div>
                         </div>
                     `;
                 } else {
-                    const inputId = `kg-${prod.nome.replace(/\s/g, '').replace(/[()]/g, '')}`;
+                    const idPeso = `peso_${prod.nome.replace(/\s/g, '').replace(/[()]/g, '')}`;
                     html += `
                         <div class="card-prodotto">
                             <div class="img-placeholder">${prod.emoji}</div>
@@ -535,12 +532,11 @@
                                 <div class="ordine-row">
                                     <div class="peso-input">
                                         <label>⚖️ Peso (kg):</label>
-                                        <input type="number" step="0.01" min="0.05" value="0.5" id="${inputId}">
+                                        <input type="number" step="0.01" min="0.05" value="0.5" id="${idPeso}">
                                         <div class="esempi-peso">es: 0.05 (50g) | 0.25 (250g) | 0.55 | 1.2</div>
                                     </div>
-                                    <button class="aggiungi-variabile" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}" data-inputid="${inputId}">➕ Aggiungi</button>
+                                    <button class="aggiungi-variabile" data-nome="${prod.nome}" data-prezzoKg="${prod.prezzoKg}" data-inputid="${idPeso}">➕ Aggiungi</button>
                                 </div>
-                                <div class="anteprima-prezzo" id="preview-${inputId}">💰 €0.00</div>
                             </div>
                         </div>
                     `;
@@ -557,75 +553,63 @@
             });
         });
         
-        // Eventi variabili con anteprima prezzo
+        // Eventi variabili
         document.querySelectorAll(".aggiungi-variabile").forEach(btn => {
-            const nome = btn.dataset.nome;
-            const prezzoKg = parseFloat(btn.dataset.prezzoKg);
-            const inputId = btn.dataset.inputid;
-            const inputElem = document.getElementById(inputId);
-            const previewSpan = document.getElementById(`preview-${inputId}`);
-            
-            // Anteprima in tempo reale
-            const updatePreview = () => {
-                let val = parseFloat(inputElem.value);
-                if (isNaN(val)) val = 0;
-                let anteprima = val * prezzoKg;
-                previewSpan.innerHTML = `💰 €${anteprima.toFixed(2)}`;
-            };
-            inputElem.addEventListener('input', updatePreview);
-            updatePreview();
-            
             btn.addEventListener("click", () => {
-                let pesoKg = parseFloat(inputElem.value);
+                const nome = btn.dataset.nome;
+                const prezzoKg = parseFloat(btn.dataset.prezzoKg);
+                const inputElem = document.getElementById(btn.dataset.inputid);
+                let pesoKg = inputElem ? parseFloat(inputElem.value) : 0.5;
                 if (isNaN(pesoKg)) pesoKg = 0.5;
                 aggiungiAlCarrello(nome, prezzoKg, pesoKg, null, null);
             });
         });
     }
-    
+
     // Aggiorna carrello
     function aggiornaCarrello() {
         const listaDiv = document.getElementById("listaCarrello");
         let totale = 0;
         let htmlItems = "";
         
-        if (carrello.length === 0) {
-            htmlItems = "<p style='text-align:center; color:#6c5b4b;'>🛒 Carrello vuoto. Aggiungi prodotti!</p>";
+        if (carrelloItems.length === 0) {
+            htmlItems = "<p style='text-align:center; color:#6c5b4b;'>🛒 Carrello vuoto</p>";
         } else {
-            carrello.forEach((item, idx) => {
+            for (let i = 0; i < carrelloItems.length; i++) {
+                const item = carrelloItems[i];
                 totale += item.prezzoTotale;
-                let pesoMostra = item.pesoKg < 1 ? `${(item.pesoKg * 1000).toFixed(0)} grammi` : `${item.pesoKg.toFixed(2)} kg`;
+                const pesoMostra = item.peso < 1 ? `${(item.peso * 1000).toFixed(0)} grammi` : `${item.peso.toFixed(2)} kg`;
                 htmlItems += `
                     <div class="carrello-item">
                         <div><strong>${item.nome}</strong><br><span style="font-size:0.8rem;">⚖️ ${pesoMostra} → € ${item.prezzoTotale.toFixed(2)}</span></div>
-                        <button style="background:#f0e0d0; border:none; padding:6px 12px; border-radius:60px; cursor:pointer;" onclick="rimuoviItem(${idx})">🗑️ Rimuovi</button>
+                        <button style="background:#f0e0d0; border:none; padding:6px 12px; border-radius:60px; cursor:pointer;" onclick="rimuoviItem(${i})">🗑️</button>
                     </div>
                 `;
-            });
+            }
         }
         listaDiv.innerHTML = htmlItems;
         document.getElementById("totaleCarrello").innerText = totale.toFixed(2);
-        localStorage.setItem("camporeggiCarrello", JSON.stringify(carrello));
+        localStorage.setItem("camporeggiCarrello", JSON.stringify(carrelloItems));
     }
-    
+
     window.rimuoviItem = function(idx) {
-        carrello.splice(idx, 1);
+        carrelloItems.splice(idx, 1);
         aggiornaCarrello();
         showMessage("❌ Prodotto rimosso");
     };
-    
+
     document.getElementById("svuotaCarrello").addEventListener("click", () => {
-        if (carrello.length > 0) {
-            carrello = [];
+        if (carrelloItems.length > 0) {
+            carrelloItems = [];
             aggiornaCarrello();
             showMessage("🗑️ Carrello svuotato", true);
         }
     });
-    
+
     // Genera ordine
     function generaTestoOrdine() {
-        if (carrello.length === 0) {
-            showMessage("⚠️ Carrello vuoto, aggiungi prodotti prima di ordinare.");
+        if (carrelloItems.length === 0) {
+            showMessage("⚠️ Carrello vuoto");
             return null;
         }
         let testo = "🛒 ORDINE CAMPOREGGI VALLE BENEDETTA\n";
@@ -633,70 +617,67 @@
         testo += "=".repeat(50) + "\n\n";
         let totale = 0;
         
-        carrello.forEach((item, idx) => {
-            let pesoMostra = item.pesoKg < 1 ? `${(item.pesoKg * 1000).toFixed(0)} grammi` : `${item.pesoKg.toFixed(2)} kg`;
-            testo += `${idx+1}. ${item.nome}\n`;
+        for (let i = 0; i < carrelloItems.length; i++) {
+            const item = carrelloItems[i];
+            const pesoMostra = item.peso < 1 ? `${(item.peso * 1000).toFixed(0)} grammi` : `${item.peso.toFixed(2)} kg`;
+            testo += `${i+1}. ${item.nome}\n`;
             testo += `   📦 Peso: ${pesoMostra}\n`;
             testo += `   💶 Prezzo: € ${item.prezzoTotale.toFixed(2)}\n\n`;
             totale += item.prezzoTotale;
-        });
+        }
         
         testo += "=".repeat(50) + "\n";
-        testo += `💰 TOTALE COMPLESSIVO: € ${totale.toFixed(2)}\n\n`;
+        testo += `💰 TOTALE: € ${totale.toFixed(2)}\n\n`;
         testo += "─".repeat(50) + "\n";
         testo += "📦 DATI CONSEGNA:\n";
-        testo += "   Nome e cognome: _______________\n";
+        testo += "   Nome: _______________\n";
         testo += "   Indirizzo: _______________\n";
-        testo += "   Città: _______________\n";
         testo += "   Telefono: _______________\n\n";
-        testo += "🎂 NOTE (compleanni, monodose, personalizzazioni):\n";
-        testo += "   _____________________________________________\n\n";
+        testo += "🎂 NOTE: _______________\n\n";
         testo += "🚚 CONSEGNE: Lunedì, Mercoledì, Venerdì\n";
-        testo += "🙏 Grazie per l'ordine!\n";
-        testo += "Camporeggi Valle Benedetta - Livorno\n";
+        testo += "🙏 Grazie!\n";
         testo += "📞 +39 331 621 9512\n";
         testo += "📧 ops.channel@proton.me";
         return testo;
     }
-    
+
     // Email
     document.getElementById("btnEmail").addEventListener("click", () => {
         const ordine = generaTestoOrdine();
         if (ordine) {
-            window.location.href = `mailto:ops.channel@proton.me?subject=Ordine%20Camporeggi%20-%20${new Date().toLocaleDateString('it-IT')}&body=${encodeURIComponent(ordine)}`;
+            window.location.href = `mailto:ops.channel@proton.me?subject=Ordine%20Camporeggi&body=${encodeURIComponent(ordine)}`;
         }
     });
-    
+
     // Telegram
     document.getElementById("btnTelegram").addEventListener("click", () => {
         const ordine = generaTestoOrdine();
         if (ordine) {
             navigator.clipboard.writeText(ordine);
             window.open('https://t.me/MarketHubShop_bot', '_blank');
-            showMessage("✅ Ordine copiato! Incollalo nella chat di @MarketHubShop_bot", true);
+            showMessage("✅ Ordine copiato! Incollalo nella chat", true);
         }
     });
-    
-    // Link Telegram footer
+
     document.getElementById("telegramFooterLink")?.addEventListener("click", (e) => {
         e.preventDefault();
         window.open('https://t.me/MarketHubShop_bot', '_blank');
     });
-    
+
     // Carica carrello salvato
     const saved = localStorage.getItem("camporeggiCarrello");
     if (saved) {
         try {
             const parsed = JSON.parse(saved);
             if (Array.isArray(parsed) && parsed.length > 0) {
-                carrello = parsed;
+                carrelloItems = parsed;
                 aggiornaCarrello();
-                showMessage("🔄 Carrello recuperato dalla visita precedente!", true);
+                showMessage("🔄 Carrello recuperato", true);
             }
         } catch(e) {}
     }
-    
-    renderCatalogo();
+
+    mostraProdotti();
 </script>
 </body>
 </html>
