@@ -41,7 +41,9 @@
             border: 1px solid #f0e4d4;
         }
         .card-prodotto:hover { transform: translateY(-6px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15); }
-        .img-placeholder { background: #e9e1d4; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .img-placeholder { background: #e9e1d4; height: 220px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .img-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+        .img-placeholder .emoji-fallback { font-size: 4rem; }
         .info-prodotto { padding: 22px; }
         .nome-prodotto { font-weight: 700; font-size: 1.3rem; margin-bottom: 8px; }
         .prezzo { color: #b45f2b; font-weight: 700; font-size: 1.1rem; margin: 12px 0; background: #fef3e8; display: inline-block; padding: 4px 12px; border-radius: 30px; }
@@ -153,31 +155,42 @@
 
 <script>
     // ============================================================
-    // DATABASE PRODOTTI (con ID univoci)
+    // DATABASE PRODOTTI CON PERCORSI IMMAGINI
     // ============================================================
     const prodotti = [
-        { id: 1, nome: "Tagliolini freschi", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
-        { id: 2, nome: "Pappardelle fresche", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝" },
-        { id: 3, nome: "Ragù di manzo", tipo: "variabile", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", emoji: "🍲" },
-        { id: 4, nome: "Cinghiale in umido (pezzi grandi)", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🐗" },
-        { id: 5, nome: "Cervo in umido", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🦌" },
-        { id: 6, nome: "Peposo", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
-        { id: 7, nome: "Arista", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🐖" },
-        { id: 8, nome: "Roast beef", tipo: "variabile", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩" },
-        { id: 9, nome: "Pinse 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", emoji: "🍕" },
-        { id: 10, nome: "Pinse 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", emoji: "🍕" },
-        { id: 11, nome: "Schiacciata al carbone 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", emoji: "🖤" },
-        { id: 12, nome: "Schiacciata al carbone 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", emoji: "🖤" },
-        { id: 13, nome: "Pappa al pomodoro", tipo: "variabile", prezzoKg: 8, categoria: "🥣 Zuppe e primi", emoji: "🍅" },
-        { id: 14, nome: "Farro cotto con pomodorini", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🌾" },
-        { id: 15, nome: "Lasagne (in contenitore)", tipo: "variabile", prezzoKg: 13, categoria: "🥣 Zuppe e primi", emoji: "🍽️" },
-        { id: 16, nome: "Melanzane alla parmigiana", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🍆" },
-        { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-        { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
-        { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓" },
-        { id: 20, nome: "Cheesecake cotta/cruda", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-        { id: 21, nome: "Torta del nonno", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" },
-        { id: 22, nome: "Torta della nonna", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰" }
+        // PASTA FRESCA
+        { id: 1, nome: "Tagliolini freschi", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝", img: "img/pasta/tagliolini.jpg" },
+        { id: 2, nome: "Pappardelle fresche", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", emoji: "🍝", img: "img/pasta/pappardelle.jpg" },
+        
+        // SUGHI
+        { id: 3, nome: "Ragù di manzo", tipo: "variabile", prezzoKg: 12, categoria: "🍲 Sughi (sottovuoto)", emoji: "🍲", img: "img/sughi/ragu.jpg" },
+        { id: 4, nome: "Cinghiale in umido (pezzi grandi)", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🐗", img: "img/sughi/cinghiale.jpg" },
+        { id: 5, nome: "Cervo in umido", tipo: "variabile", prezzoKg: 15, categoria: "🍲 Sughi (sottovuoto)", emoji: "🦌", img: "img/sughi/cervo.jpg" },
+        
+        // CARNI
+        { id: 6, nome: "Peposo", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩", img: "img/carni/peposo.jpg" },
+        { id: 7, nome: "Arista", tipo: "variabile", prezzoKg: 15, categoria: "🥩 Carni (sottovuoto)", emoji: "🐖", img: "img/carni/arista.jpg" },
+        { id: 8, nome: "Roast beef", tipo: "variabile", prezzoKg: 20, categoria: "🥩 Carni (sottovuoto)", emoji: "🥩", img: "img/carni/roastbeef.jpg" },
+        
+        // FORNO (peso fisso)
+        { id: 9, nome: "Pinse 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", emoji: "🍕", img: "img/forno/pinse.jpg" },
+        { id: 10, nome: "Pinse 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", emoji: "🍕", img: "img/forno/pinse.jpg" },
+        { id: 11, nome: "Schiacciata al carbone 200g", tipo: "fisso", pesoKg: 0.2, prezzo: 2, categoria: "🔥 Forno", emoji: "🖤", img: "img/forno/schiacciata.jpg" },
+        { id: 12, nome: "Schiacciata al carbone 400g", tipo: "fisso", pesoKg: 0.4, prezzo: 3, categoria: "🔥 Forno", emoji: "🖤", img: "img/forno/schiacciata.jpg" },
+        
+        // ZUPPE E PRIMI
+        { id: 13, nome: "Pappa al pomodoro", tipo: "variabile", prezzoKg: 8, categoria: "🥣 Zuppe e primi", emoji: "🍅", img: "img/primi/pappa.jpg" },
+        { id: 14, nome: "Farro cotto con pomodorini", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🌾", img: "img/primi/farro.jpg" },
+        { id: 15, nome: "Lasagne (in contenitore)", tipo: "variabile", prezzoKg: 13, categoria: "🥣 Zuppe e primi", emoji: "🍽️", img: "img/primi/lasagne.jpg" },
+        { id: 16, nome: "Melanzane alla parmigiana", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", emoji: "🍆", img: "img/primi/melanzane.jpg" },
+        
+        // DOLCI
+        { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰", img: "img/dolci/crostata.jpg" },
+        { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓", img: "img/dolci/crostata.jpg" },
+        { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍓", img: "img/dolci/crostata.jpg" },
+        { id: 20, nome: "Cheesecake cotta/cruda", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰", img: "img/dolci/cheesecake.jpg" },
+        { id: 21, nome: "Torta del nonno", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰", img: "img/dolci/torranonno.jpg" },
+        { id: 22, nome: "Torta della nonna", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", emoji: "🍰", img: "img/dolci/torranonna.jpg" }
     ];
 
     let carrello = [];
@@ -189,6 +202,11 @@
         alertDiv.style.background = isError ? "#fff3cd" : "#d4edda";
         alertDiv.style.color = isError ? "#856404" : "#155724";
         setTimeout(() => alertDiv.style.display = "none", 3000);
+    }
+
+    // Funzione per gestire il fallback delle immagini
+    function handleImageError(imgElement, emoji) {
+        imgElement.parentElement.innerHTML = `<div class="emoji-fallback">${emoji}</div>`;
     }
 
     // Aggiungi prodotto variabile
@@ -235,7 +253,9 @@
                 if (prod.tipo === "fisso") {
                     html += `
                         <div class="card-prodotto">
-                            <div class="img-placeholder">${prod.emoji}</div>
+                            <div class="img-placeholder">
+                                <img src="${prod.img}" alt="${prod.nome}" onerror="handleImageError(this, '${prod.emoji}')">
+                            </div>
                             <div class="info-prodotto">
                                 <div class="nome-prodotto">${prod.nome}</div>
                                 <div class="prezzo">💰 ${prod.prezzo}€ (${prod.pesoKg*1000}g)</div>
@@ -249,7 +269,9 @@
                     const inputId = `peso-${prod.id}`;
                     html += `
                         <div class="card-prodotto">
-                            <div class="img-placeholder">${prod.emoji}</div>
+                            <div class="img-placeholder">
+                                <img src="${prod.img}" alt="${prod.nome}" onerror="handleImageError(this, '${prod.emoji}')">
+                            </div>
                             <div class="info-prodotto">
                                 <div class="nome-prodotto">${prod.nome}</div>
                                 <div class="prezzo">💰 ${prod.prezzoKg}€/kg</div>
