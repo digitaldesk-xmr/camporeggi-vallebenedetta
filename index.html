@@ -146,28 +146,28 @@
 
 <script>
     // ============================================================
-    // LINK IMMAGINI DA POSTIMAGES - SOSTITUISCI CON I TUOI LINK
+    // LINK IMMAGINI DA POSTIMAGES
     // ============================================================
     const IMG_TAGLIOLINI = "https://i.postimg.cc/DZ4Vwygq/tagliolini-jpg.jpg";
-    const IMG_PAPPARDELLE = "https://i.postimg.cc/CM6Z2vZr/pappardelle-jpg.jpg";  // CAMBIA CON IL TUO LINK
-    const IMG_RAGU = "https://i.postimg.cc/L8FsdGmb/ragu-jpg.jpg";          // CAMBIA
-    const IMG_CINGHIALE = "https://i.postimg.cc/7PC7q8rR/cinghiale-jpg.jpg";     // CAMBIA
-    const IMG_CERVO = "https://i.postimg.cc/kXtwTYM4/Whats-App-Image-2026-05-14-at-13-58-58.jpg";         // CAMBIA
-    const IMG_PEPOSO = "https://i.postimg.cc/MpmLY3t2/Whats-App-Image-2026-05-14-at-13-58-36.jpg";        // CAMBIA
-    const IMG_ARISTA = "https://i.postimg.cc/vZhPngHy/Whats-App-Image-2026-05-14-at-13-58-07.jpg";        // CAMBIA
-    const IMG_ROASTBEEF = "https://i.postimg.cc/tg7zVBMc/Whats-App-Image-2026-05-14-at-13-57-44.jpg";     // CAMBIA
-    const IMG_PINSE = "https://i.postimg.cc/5tHwt6Hc/Whats-App-Image-2026-05-14-at-13-56-50.jpg";         // CAMBIA
-    const IMG_SCHIACCIATA = "https://i.postimg.cc/0NJwsF3w/Whats-App-Image-2026-05-14-at-13-56-24.jpg";   // CAMBIA
-    const IMG_PAPPA = "https://i.postimg.cc/B60XG6H8/Whats-App-Image-2026-05-14-at-13-52-09.jpg";         // CAMBIA
-    const IMG_FARRO = "https://i.postimg.cc/N01jbcSd/Whats-App-Image-2026-05-14-at-13-56-03.jpg";         // CAMBIA
-    const IMG_LASAGNE = "https://i.postimg.cc/MH4wqPgp/Whats-App-Image-2026-05-14-at-13-51-58.jpg";       // CAMBIA
-    const IMG_MELANZANE = "https://i.postimg.cc/3JXhPB9t/Whats-App-Image-2026-05-14-at-13-55-32.jpg";     // CAMBIA
-    const IMG_CROSTATA = "https://i.postimg.cc/fR8GNgXQ/Whats-App-Image-2026-05-14-at-13-54-38.jpg";      // CAMBIA
-    const IMG_CHEESECAKE = "https://i.postimg.cc/W1YHKqLP/Whats-App-Image-2026-05-14-at-13-53-22.jpg";    // CAMBIA
-    const IMG_TORRANONNO = "https://i.postimg.cc/fy1G63S6/Whats-App-Image-2026-05-14-at-13-52-41.jpg";    // CAMBIA
-    const IMG_TORRANONNA = "https://i.postimg.cc/DwhvZD8f/Whats-App-Image-2026-05-14-at-13-51-44.jpg";    // CAMBIA
+    const IMG_PAPPARDELLE = "https://i.postimg.cc/CM6Z2vZr/pappardelle-jpg.jpg";
+    const IMG_RAGU = "https://i.postimg.cc/L8FsdGmb/ragu-jpg.jpg";
+    const IMG_CINGHIALE = "https://i.postimg.cc/7PC7q8rR/cinghiale-jpg.jpg";
+    const IMG_CERVO = "https://i.postimg.cc/kXtwTYM4/Whats-App-Image-2026-05-14-at-13-58-58.jpg";
+    const IMG_PEPOSO = "https://i.postimg.cc/MpmLY3t2/Whats-App-Image-2026-05-14-at-13-58-36.jpg";
+    const IMG_ARISTA = "https://i.postimg.cc/vZhPngHy/Whats-App-Image-2026-05-14-at-13-58-07.jpg";
+    const IMG_ROASTBEEF = "https://i.postimg.cc/tg7zVBMc/Whats-App-Image-2026-05-14-at-13-57-44.jpg";
+    const IMG_PINSE = "https://i.postimg.cc/5tHwt6Hc/Whats-App-Image-2026-05-14-at-13-56-50.jpg";
+    const IMG_SCHIACCIATA = "https://i.postimg.cc/0NJwsF3w/Whats-App-Image-2026-05-14-at-13-56-24.jpg";
+    const IMG_PAPPA = "https://i.postimg.cc/B60XG6H8/Whats-App-Image-2026-05-14-at-13-52-09.jpg";
+    const IMG_FARRO = "https://i.postimg.cc/N01jbcSd/Whats-App-Image-2026-05-14-at-13-56-03.jpg";
+    const IMG_LASAGNE = "https://i.postimg.cc/MH4wqPgp/Whats-App-Image-2026-05-14-at-13-51-58.jpg";
+    const IMG_MELANZANE = "https://i.postimg.cc/3JXhPB9t/Whats-App-Image-2026-05-14-at-13-55-32.jpg";
+    const IMG_CROSTATA = "https://i.postimg.cc/fR8GNgXQ/Whats-App-Image-2026-05-14-at-13-54-38.jpg";
+    const IMG_CHEESECAKE = "https://i.postimg.cc/W1YHKqLP/Whats-App-Image-2026-05-14-at-13-53-22.jpg";
+    const IMG_TORRANONNO = "https://i.postimg.cc/fy1G63S6/Whats-App-Image-2026-05-14-at-13-52-41.jpg";
+    const IMG_TORRANONNA = "https://i.postimg.cc/DwhvZD8f/Whats-App-Image-2026-05-14-at-13-51-44.jpg";
 
-    // DATABASE PRODOTTI
+    // DATABASE PRODOTTI - DOLCI A 18€/kg (modificato)
     const prodotti = [
         // PASTA FRESCA
         { id: 1, nome: "Tagliolini freschi", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", img: IMG_TAGLIOLINI },
@@ -195,13 +195,13 @@
         { id: 15, nome: "Lasagne (in contenitore)", tipo: "variabile", prezzoKg: 13, categoria: "🥣 Zuppe e primi", img: IMG_LASAGNE },
         { id: 16, nome: "Melanzane alla parmigiana", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", img: IMG_MELANZANE },
         
-        // DOLCI
-        { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: IMG_CROSTATA },
-        { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: IMG_CROSTATA },
-        { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: IMG_CROSTATA },
-        { id: 20, nome: "Cheesecake cotta/cruda", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: IMG_CHEESECAKE },
-        { id: 21, nome: "Torta del nonno", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: IMG_TORRANONNO },
-        { id: 22, nome: "Torta della nonna", tipo: "variabile", prezzoKg: 15, categoria: "🍰 Dolci", img: IMG_TORRANONNA }
+        // DOLCI - PREZZO AGGIORNATO A 18€/kg
+        { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_CROSTATA },
+        { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_CROSTATA },
+        { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_CROSTATA },
+        { id: 20, nome: "Cheesecake cotta/cruda", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_CHEESECAKE },
+        { id: 21, nome: "Torta del nonno", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_TORRANONNO },
+        { id: 22, nome: "Torta della nonna", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_TORRANONNA }
     ];
 
     let carrello = [];
