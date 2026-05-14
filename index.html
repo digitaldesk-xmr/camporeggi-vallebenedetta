@@ -72,6 +72,9 @@
         .map-container iframe { width: 100%; height: 100%; min-height: 420px; }
         
         footer { text-align: center; padding: 40px 0; color: #6c5b4b; border-top: 1px solid #e9dacb; margin-top: 40px; font-size: 0.85rem; }
+        .footer-sponsor { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9dacb; font-size: 0.75rem; color: #8b7a68; }
+        .footer-sponsor a { color: #2c5e3a; text-decoration: none; font-weight: 600; }
+        .footer-sponsor a:hover { text-decoration: underline; color: #1e4529; }
         .alert-message { background: #fff3cd; padding: 12px 20px; border-radius: 60px; margin-bottom: 20px; display: none; }
         
         @media (max-width: 780px) {
@@ -141,6 +144,9 @@
         📱 <a href="tel:+393316219512">+39 331 621 9512</a> |
         📱 <a href="#" id="telegramFooterLink">@MarketHubShop_bot</a><br>
         📍 Trattoria Camporeggi - Casa della Nella, Livorno
+        <div class="footer-sponsor">
+            🤝 Sponsorizzato da <a href="https://digitaldesk-xmr.github.io/landing/" target="_blank" rel="noopener noreferrer">Digital Desk-XMR</a>
+        </div>
     </footer>
 </div>
 
@@ -167,7 +173,7 @@
     const IMG_TORRANONNO = "https://i.postimg.cc/fy1G63S6/Whats-App-Image-2026-05-14-at-13-52-41.jpg";
     const IMG_TORRANONNA = "https://i.postimg.cc/DwhvZD8f/Whats-App-Image-2026-05-14-at-13-51-44.jpg";
 
-    // DATABASE PRODOTTI - DOLCI A 18€/kg (modificato)
+    // DATABASE PRODOTTI - DOLCI A 18€/kg
     const prodotti = [
         // PASTA FRESCA
         { id: 1, nome: "Tagliolini freschi", tipo: "variabile", prezzoKg: 8, categoria: "🍝 Pasta fresca (sottovuoto)", img: IMG_TAGLIOLINI },
@@ -195,7 +201,7 @@
         { id: 15, nome: "Lasagne (in contenitore)", tipo: "variabile", prezzoKg: 13, categoria: "🥣 Zuppe e primi", img: IMG_LASAGNE },
         { id: 16, nome: "Melanzane alla parmigiana", tipo: "variabile", prezzoKg: 7, categoria: "🥣 Zuppe e primi", img: IMG_MELANZANE },
         
-        // DOLCI - PREZZO AGGIORNATO A 18€/kg
+        // DOLCI - PREZZO 18€/kg
         { id: 17, nome: "Crostata albicocca", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_CROSTATA },
         { id: 18, nome: "Crostata frutti di bosco", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_CROSTATA },
         { id: 19, nome: "Crostata fragole", tipo: "variabile", prezzoKg: 18, categoria: "🍰 Dolci", img: IMG_CROSTATA },
